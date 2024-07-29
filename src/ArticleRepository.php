@@ -38,8 +38,8 @@ class ArticleRepository
     public function storeArticle(Article $article): void
     {
         $stmt = $this->pdo->prepare(
-            'INSERT INTO articles (guid, title, url, image_url, created_at) 
-             VALUES (:guid, :title, :url, :imageUrl, :createdAt)'
+            'INSERT INTO articles (guid, title, url, image_url) 
+             VALUES (:guid, :title, :url, :imageUrl)'
         );
 
         $stmt->execute([
@@ -47,7 +47,6 @@ class ArticleRepository
             ':title' => $article->getTitle(),
             ':url' => $article->getUrl(),
             ':imageUrl' => $article->getImageUrl(),
-            ':createdAt' => $article->getCreatedAt()->format('Y-m-d H:i:s'),
         ]);
 
         $id = $this->pdo->lastInsertId();

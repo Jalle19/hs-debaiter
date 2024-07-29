@@ -10,7 +10,6 @@ class Article
     private string $title;
     private string $url;
     private ?string $imageUrl = null;
-    private \DateTimeInterface $createdAt;
 
     public static function fromFeedItem(array $item): Article
     {
@@ -23,8 +22,6 @@ class Article
             $article->imageUrl = $item['enclosure']['url'];
         }
 
-        $article->createdAt = \DateTimeImmutable::createFromFormat(\DateTimeInterface::RSS, $item['createdAt']);
-
         return $article;
     }
 
@@ -36,7 +33,6 @@ class Article
         $article->title = $row['title'];
         $article->url = $row['url'];
         $article->imageUrl = $row['image_url'];
-        $article->createdAt = new \DateTimeImmutable($row['created_at']);
 
         return $article;
     }
@@ -69,10 +65,5 @@ class Article
     public function getImageUrl(): ?string
     {
         return $this->imageUrl;
-    }
-
-    public function getCreatedAt(): \DateTimeInterface
-    {
-        return $this->createdAt;
     }
 }

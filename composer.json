@@ -1,0 +1,24 @@
+{
+    "name": "jalle19/hs-debaiter",
+    "description": "Debaiter for hs.fi",
+    "type": "project",
+    "license": "GPL-2.0-or-later",
+    "autoload": {
+        "psr-4": {
+            "Jalle19\\HsDebaiter\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Sam Stenvall",
+            "email": "sam.stenvall@nitor.com"
+        }
+    ],
+    "require": {
+        "ext-pdo": "*",
+        "symfony/console": "^5.4",
+        "forensic/feed-parser": "^1.2",
+        "monolog/monolog": "^2.9",
+        "vlucas/phpdotenv": "^5.6"
+    }
+}

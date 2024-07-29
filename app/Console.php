@@ -18,7 +18,7 @@ $logger = new Logger('hs-debaiter');
 $logger->pushHandler(new Monolog\Handler\StreamHandler('php://stdout', Logger::INFO));
 $feedParser = new Parser();
 $pdo = new \PDO(
-    sprintf('mysql:host=%s;dbname=%s', $_ENV['DB_HOST'], $_ENV['DB_NAME']),
+    sprintf('mysql:host=%s;port=%d;dbname=%s', $_ENV['DB_HOST'], $_ENV['DB_PORT'], $_ENV['DB_NAME']),
     $_ENV['DB_USER'],
     $_ENV['DB_PASS'],
 );

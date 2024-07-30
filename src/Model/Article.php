@@ -11,6 +11,7 @@ class Article
     private string $url;
     private ?string $imageUrl = null;
     private \DateTimeInterface $createdAt;
+    private \DateTimeInterface $updatedAt;
     private int $numTitles = 0;
     private array $articleTitles = [];
 
@@ -37,6 +38,7 @@ class Article
         $article->url = $row['url'];
         $article->imageUrl = $row['image_url'];
         $article->createdAt = new \DateTimeImmutable($row['created_at']);
+        $article->updatedAt = new \DateTimeImmutable($row['updated_at']);
 
         if (isset($row['num_titles'])) {
             $article->numTitles = $row['num_titles'];

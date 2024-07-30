@@ -40,7 +40,11 @@ class ArticleRepository
     public function getArticle(string $guid): ?Article
     {
         $stmt = $this->pdo->prepare(
-            'SELECT * FROM articles WHERE guid = :guid'
+            'SELECT articles.*, COUNT(article_titles.id) AS num_titles
+             FROM articles
+             LEFT OUTER JOIN article_titles ON (article_titles.article_id = articles.id)
+             WHERE guid = :guid
+             GROUP BY articles.id'
         );
 
         $stmt->execute([

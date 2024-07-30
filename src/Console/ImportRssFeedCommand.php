@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ImportRssFeedCommand extends Command
 {
-    private const HS_ETUSIVU_FEED_URL = 'https://www.hs.fi/rss/tuoreimmat.xml';
+    private const HS_UUSIMMAT_FEED_URL = 'https://www.hs.fi/rss/tuoreimmat.xml';
 
     protected static $defaultName = 'import-rss-feed';
 
@@ -40,8 +40,8 @@ class ImportRssFeedCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->logger->info('Parsing feed', ['url' => self::HS_ETUSIVU_FEED_URL]);
-        $feed = $this->feedParser->parseFromURL(self::HS_ETUSIVU_FEED_URL)->toArray();
+        $this->logger->info('Parsing feed', ['url' => self::HS_UUSIMMAT_FEED_URL]);
+        $feed = $this->feedParser->parseFromURL(self::HS_UUSIMMAT_FEED_URL)->toArray();
         $this->logger->info(
             'Got feed',
             ['name' => $feed['title'], 'lastUpdated' => $feed['lastUpdated'], 'numItems' => count($feed['items'])]

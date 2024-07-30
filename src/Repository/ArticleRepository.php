@@ -37,6 +37,23 @@ class ArticleRepository
         }
     }
 
+    public function getFrequentlyChangedArticles(int $limit): \Generator {
+        $stmt = $this->pdo->prepare(
+            'SELECT articles.*, COUNT(article_titles.id) AS num_titles
+             FROM articles
+             LEFT OUTER JOIN article_titles ON (article_titles.article_id = articles.id)
+             GROUP BY articles.id
+             ORDER BY COUNT(article_titles.id) DESC LIMIT :limit'
+        );
+
+        $stmt->bindParam(':limit', $limit, \PDO::PARAM_INT);
+        $stmt->execute();
+
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            yield Article::fromDatabaseRow($row);
+        }
+    }
+
     public function getArticle(string $guid): ?Article
     {
         $stmt = $this->pdo->prepare(

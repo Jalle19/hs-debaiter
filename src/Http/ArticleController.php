@@ -37,6 +37,18 @@ class ArticleController
         return $response;
     }
 
+    public function getFrequentlyChangedArticles(ServerRequestInterface $request): ResponseInterface
+    {
+        $articles = $this->articleRepository->getFrequentlyChangedArticles(10);
+
+        $response = (new Response())
+            ->withHeader('Content-Type', 'application/json');
+
+        $response->getBody()->write($this->serializer->serialize($articles, 'json'));
+
+        return $response;
+    }
+
     /**
      * @throws NotFoundException
      */

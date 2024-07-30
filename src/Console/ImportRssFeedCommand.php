@@ -58,7 +58,11 @@ class ImportRssFeedCommand extends Command
                 if ($article->getTitle() !== $existingArticle->getTitle()) {
                     $this->logger->info(
                         'Storing title change',
-                        ['old' => $existingArticle->getTitle(), 'new' => $item['title']]
+                        [
+                            'guid' => $existingArticle->getGuid(),
+                            'old' => $existingArticle->getTitle(),
+                            'new' => $item['title']
+                        ]
                     );
 
                     $this->articleRepository->storeArticleTitleChange($existingArticle, $item['title']);

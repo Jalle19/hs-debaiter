@@ -22,6 +22,7 @@
         "laminas/laminas-httphandlerrunner": "^2.10",
         "league/container": "^4.2",
         "league/route": "^5.1",
+        "middlewares/cors": "^2.0",
         "monolog/monolog": "^2.9",
         "nyholm/psr7": "^1.8",
         "nyholm/psr7-server": "^1.1",

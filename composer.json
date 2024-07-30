@@ -15,10 +15,20 @@
         }
     ],
     "require": {
+        "ext-json": "*",
         "ext-pdo": "*",
-        "symfony/console": "^5.4",
         "forensic/feed-parser": "^1.2",
+        "jms/serializer": "^3.30",
+        "laminas/laminas-httphandlerrunner": "^2.10",
+        "league/container": "^4.2",
+        "league/route": "^5.1",
         "monolog/monolog": "^2.9",
+        "nyholm/psr7": "^1.8",
+        "nyholm/psr7-server": "^1.1",
+        "symfony/console": "^5.4",
         "vlucas/phpdotenv": "^5.6"
+    },
+    "config": {
+        "sort-packages": true
     }
 }

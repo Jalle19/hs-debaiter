@@ -2,8 +2,8 @@
 
 use Dotenv\Dotenv;
 use Forensic\FeedParser\Parser;
-use Jalle19\HsDebaiter\ArticleRepository;
 use Jalle19\HsDebaiter\Console\ImportRssFeedCommand;
+use Jalle19\HsDebaiter\Repository\ArticleRepository;
 use Monolog\Logger;
 use Symfony\Component\Console\Application;
 

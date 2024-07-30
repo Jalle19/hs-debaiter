@@ -1,6 +1,6 @@
 <?php
 
-namespace Jalle19\HsDebaiter;
+namespace Jalle19\HsDebaiter\Model;
 
 class Article
 {
@@ -10,6 +10,9 @@ class Article
     private string $title;
     private string $url;
     private ?string $imageUrl = null;
+    private \DateTimeInterface $createdAt;
+    private int $numTitles = 0;
+    private array $articleTitles = [];
 
     public static function fromFeedItem(array $item): Article
     {
@@ -18,7 +21,7 @@ class Article
         $article->title = $item['title'];
         $article->url = $item['link'];
 
-        if ($item['enclosure']['url']) {
+        if (isset($item['enclosure']['url'])) {
             $article->imageUrl = $item['enclosure']['url'];
         }
 
@@ -33,6 +36,11 @@ class Article
         $article->title = $row['title'];
         $article->url = $row['url'];
         $article->imageUrl = $row['image_url'];
+        $article->createdAt = new \DateTimeImmutable($row['created_at']);
+
+        if (isset($row['num_titles'])) {
+            $article->numTitles = $row['num_titles'];
+        }
 
         return $article;
     }
@@ -65,5 +73,10 @@ class Article
     public function getImageUrl(): ?string
     {
         return $this->imageUrl;
+    }
+
+    public function setArticleTitles(array $articleTitles): void
+    {
+        $this->articleTitles = $articleTitles;
     }
 }

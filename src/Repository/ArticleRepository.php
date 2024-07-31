@@ -112,8 +112,7 @@ class ArticleRepository
 
         // Update the article itself to have the newest title
         $stmt = $this->pdo->prepare(
-            'UPDATE articles SET title = :title, updated_at = CURRENT_TIMESTAMP()
-             WHERE id = :id'
+            'UPDATE articles SET title = :title WHERE id = :id'
         );
 
         $stmt->execute([

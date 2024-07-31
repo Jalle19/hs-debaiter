@@ -9,7 +9,7 @@ CREATE TABLE `articles`
     `url`        VARCHAR(255) NOT NULL COLLATE 'utf8mb4_general_ci',
     `image_url`  VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
     `created_at` TIMESTAMP    NOT NULL DEFAULT current_timestamp(),
-    `updated_at` TIMESTAMP NULL DEFAULT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `guid` (`guid`) USING BTREE,
     INDEX        `url` (`url`) USING BTREE

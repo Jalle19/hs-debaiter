@@ -1,6 +1,3 @@
-CREATE
-DATABASE `hs_debaiter` /*!40100 COLLATE 'utf8mb4_general_ci' */;
-
 CREATE TABLE `articles`
 (
     `id`         INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,

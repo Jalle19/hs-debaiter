@@ -1,5 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
+  import ArticleSummary from './ArticleSummary.svelte';
 
   export let data;
 
@@ -38,7 +39,9 @@
 
   <ul>
     {#each data.todaysChangedArticles as article}
-      <li>[{article.num_titles}] <a href="/article/{article.guid}">{article.title}</a></li>
+      <li>
+        <ArticleSummary article={article}></ArticleSummary>
+      </li>
     {/each}
   </ul>
 </div>
@@ -48,7 +51,9 @@
 
   <ul>
     {#each data.frequentlyChangedArticles as article}
-      <li>[{article.num_titles}] <a href="/article/{article.guid}">{article.title}</a></li>
+      <li>
+        <ArticleSummary article={article}></ArticleSummary>
+      </li>
     {/each}
   </ul>
 </div>

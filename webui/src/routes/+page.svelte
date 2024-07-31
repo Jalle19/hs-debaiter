@@ -34,17 +34,17 @@
 </div>
 
 <div class="pure-u-1-1 l-box">
-  <h2>Latest articles</h2>
+  <h2>Articles with title changes (last 24 hours)</h2>
 
   <ul>
-    {#each data.articles as article}
+    {#each data.todaysChangedArticles as article}
       <li>[{article.num_titles}] <a href="/article/{article.guid}">{article.title}</a></li>
     {/each}
   </ul>
 </div>
 
 <div class="pure-u-1-1 l-box">
-  <h2>Frequently changed articles</h2>
+  <h2>Most updated articles (last 7 days)</h2>
 
   <ul>
     {#each data.frequentlyChangedArticles as article}

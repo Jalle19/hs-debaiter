@@ -66,7 +66,7 @@ $router->map('GET', '/', function (ServerRequestInterface $request): ResponseInt
     return $response;
 });
 
-$router->map('GET', '/articles', [ArticleController::class, 'getArticles']);
+$router->map('GET', '/articles/todays-changed', [ArticleController::class, 'getTodaysChangedArticles']);
 $router->map('GET', '/articles/frequently-changed', [ArticleController::class, 'getFrequentlyChangedArticles']);
 $router->map('GET', '/article/{guid}', [ArticleController::class, 'getArticle']);
 

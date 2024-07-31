@@ -25,9 +25,9 @@ class ArticleController
         $this->serializer = $serializer;
     }
 
-    public function getArticles(ServerRequestInterface $request): ResponseInterface
+    public function getTodaysChangedArticles(ServerRequestInterface $request): ResponseInterface
     {
-        $articles = $this->articleRepository->getArticles(20);
+        $articles = $this->articleRepository->getTodaysChangedArticles();
 
         $response = (new Response())
             ->withHeader('Content-Type', 'application/json');
@@ -39,7 +39,7 @@ class ArticleController
 
     public function getFrequentlyChangedArticles(ServerRequestInterface $request): ResponseInterface
     {
-        $articles = $this->articleRepository->getFrequentlyChangedArticles(10);
+        $articles = $this->articleRepository->getFrequentlyChangedArticles(15);
 
         $response = (new Response())
             ->withHeader('Content-Type', 'application/json');

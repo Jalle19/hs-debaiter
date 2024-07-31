@@ -19,17 +19,18 @@ class ArticleRepository
         $this->pdo = $pdo;
     }
 
-    public function getArticles(int $limit): \Generator
+    public function getTodaysChangedArticles(): \Generator
     {
         $stmt = $this->pdo->prepare(
             'SELECT articles.*, COUNT(article_titles.id) AS num_titles
              FROM articles
              LEFT OUTER JOIN article_titles ON (article_titles.article_id = articles.id)
+             WHERE articles.created_at > (NOW() - INTERVAL 1 DAY)
              GROUP BY articles.id
-             ORDER BY id DESC LIMIT :limit'
+             HAVING COUNT(article_titles.id) > 1
+             ORDER BY id DESC'
         );
 
-        $stmt->bindParam(':limit', $limit, \PDO::PARAM_INT);
         $stmt->execute();
 
         while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
@@ -42,6 +43,7 @@ class ArticleRepository
             'SELECT articles.*, COUNT(article_titles.id) AS num_titles
              FROM articles
              LEFT OUTER JOIN article_titles ON (article_titles.article_id = articles.id)
+             WHERE articles.created_at > (NOW() - INTERVAL 7 DAY)
              GROUP BY articles.id
              ORDER BY COUNT(article_titles.id) DESC LIMIT :limit'
         );

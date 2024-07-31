@@ -3,13 +3,13 @@
 use Dotenv\Dotenv;
 use Jalle19\HsDebaiter\Http\ArticleController;
 use Jalle19\HsDebaiter\Http\ErrorHandler;
+use Jalle19\HsDebaiter\Http\Strategy;
 use Jalle19\HsDebaiter\Repository\ArticleRepository;
 use JMS\Serializer\Serializer;
 use JMS\Serializer\SerializerBuilder;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use League\Container\Container;
 use League\Route\Router;
-use League\Route\Strategy\ApplicationStrategy;
 use Middlewares\Cors;
 use Neomerx\Cors\Analyzer;
 use Neomerx\Cors\Strategies\Settings;
@@ -39,6 +39,8 @@ $container->add(ArticleRepository::class)
     ->addArgument(\PDO::class);
 $container->addShared(\PDO::class, $pdo);
 $container->addShared(Serializer::class, SerializerBuilder::create()->build());
+$container->add(ErrorHandler::class)
+    ->addArgument(Serializer::class);
 
 $factory = new Psr17Factory();
 $creator = new ServerRequestCreator($factory, $factory, $factory, $factory);
@@ -51,7 +53,7 @@ $analyzerSettings = (new Settings())
 $analyzer = Analyzer::instance($analyzerSettings);
 $corsMiddleware = new Cors($analyzer);
 
-$strategy = new ApplicationStrategy();
+$strategy = new Strategy();
 $strategy->setContainer($container);
 $router = new Router();
 $router->setStrategy($strategy);
@@ -68,10 +70,6 @@ $router->map('GET', '/articles', [ArticleController::class, 'getArticles']);
 $router->map('GET', '/articles/frequently-changed', [ArticleController::class, 'getFrequentlyChangedArticles']);
 $router->map('GET', '/article/{guid}', [ArticleController::class, 'getArticle']);
 
-try {
-    $response = $router->dispatch($request);
-} catch (Exception $e) {
-    $response = ErrorHandler::handleException($request, $e);
-}
+$response = $router->dispatch($request);
 
 (new SapiEmitter())->emit($response);

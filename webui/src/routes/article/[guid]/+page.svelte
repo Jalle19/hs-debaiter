@@ -3,8 +3,6 @@
 
     const guid = $page.params?.guid
     export let data
-
-    console.dir(data)
 </script>
 
 <h2>Article {guid}</h2>
@@ -13,6 +11,6 @@
 <h3>Previous titles (including current)</h3>
 <ul>
     {#each data.article.article_titles as title}
-        <li>{title.title} ({title.created_at}</li>
+        <li>{title.title} ({title.created_at})</li>
     {/each}
 </ul>

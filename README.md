@@ -12,3 +12,5 @@ cp compose.dev.yaml compose.override.yaml
 docker compose run --rm app composer install
 docker compose run --rm app php app/Console.php import-rss-feed
 docker compose up
+
+docker compose down && docker compose build app && docker compose up -d

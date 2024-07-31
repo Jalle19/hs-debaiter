@@ -4,10 +4,10 @@ h3,
 h4,
 h5,
 h6 {
-    margin-top: 0;
-    padding-bottom: 0.2em;
-    /*display: inline-block;*/
-    /*border-bottom: 2px solid var(--highlight-color);*/
+  margin-top: 0;
+  padding-bottom: 0.2em;
+  /*display: inline-block;*/
+  /*border-bottom: 2px solid var(--highlight-color);*/
 }
 
 .container {
@@ -17,9 +17,9 @@ h6 {
 }
 
 .pure-g > div {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .l-box {
-    padding: 1em;
+  padding: 1em;
 }

@@ -7,6 +7,8 @@ services:
 
   database:
     restart: unless-stopped
+    ports:
+      - '43306:3306'
     volumes:
       - mariadb_data:/var/lib/mysql
 

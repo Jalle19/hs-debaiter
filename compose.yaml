@@ -3,15 +3,10 @@ name: hs-debaiter
 services:
   app:
     build: .
-    ports:
-      - '8080:80'
-      - '2466:2466'
     depends_on:
       - database
     env_file: '.env'
 
   database:
     image: mariadb:11.4.2
-    ports:
-      - '43306:3306'
     env_file: '.env'

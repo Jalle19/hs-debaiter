@@ -7,13 +7,16 @@
 
     const debaitButtonClicked = async () => {
         // Parse the URL to get the GUID from it
-        const url = new URL(inputArticleUrl)
-        const path = url.pathname
+        try {
+            const url = new URL(inputArticleUrl)
+            const path = url.pathname
+            let guid = path.substring(path.lastIndexOf('art-') + 4, path.lastIndexOf('.'))
 
-        let guid = path.substring(path.lastIndexOf('art-') + 4, path.lastIndexOf('.'))
-
-        // Navigate
-        await goto(`/article/hs-${guid}`)
+            // Navigate
+            await goto(`/article/hs-${guid}`)
+        } catch (e) {
+            // Ignore unparsable input
+        }
     }
 </script>
 

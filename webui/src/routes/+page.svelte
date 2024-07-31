@@ -1,45 +1,45 @@
 <script lang="ts">
-    import {goto} from "$app/navigation";
+  import { goto } from '$app/navigation';
 
-    export let data
+  export let data;
 
-    let inputArticleUrl: string
+  let inputArticleUrl: string;
 
-    const debaitButtonClicked = async () => {
-        // Parse the URL to get the GUID from it
-        try {
-            const url = new URL(inputArticleUrl)
-            const path = url.pathname
-            let guid = path.substring(path.lastIndexOf('art-') + 4, path.lastIndexOf('.'))
+  const debaitButtonClicked = async () => {
+    // Parse the URL to get the GUID from it
+    try {
+      const url = new URL(inputArticleUrl);
+      const path = url.pathname;
+      let guid = path.substring(path.lastIndexOf('art-') + 4, path.lastIndexOf('.'));
 
-            // Navigate
-            await goto(`/article/hs-${guid}`)
-        } catch (e) {
-            // Ignore unparsable input
-        }
+      // Navigate
+      await goto(`/article/hs-${guid}`);
+    } catch (e) {
+      // Ignore unparsable input
     }
+  };
 </script>
 
 <p>See beyond the veil and expose the true agenda &#128517;</p>
 
 Paste a link to an article:
 <form on:submit|preventDefault={debaitButtonClicked}>
-    <input type="text" bind:value={inputArticleUrl}/>
-    <button>Debait</button>
+  <input type="text" bind:value={inputArticleUrl} />
+  <button>Debait</button>
 </form>
 
 <h2>Latest articles</h2>
 
 <ul>
-    {#each data.articles as article}
-        <li>[{article.num_titles}] <a href="/article/{article.guid}">{article.title}</a></li>
-    {/each}
+  {#each data.articles as article}
+    <li>[{article.num_titles}] <a href="/article/{article.guid}">{article.title}</a></li>
+  {/each}
 </ul>
 
 <h2>Frequently changed articles</h2>
 
 <ul>
-    {#each data.frequentlyChangedArticles as article}
-        <li>[{article.num_titles}] <a href="/article/{article.guid}">{article.title}</a></li>
-    {/each}
+  {#each data.frequentlyChangedArticles as article}
+    <li>[{article.num_titles}] <a href="/article/{article.guid}">{article.title}</a></li>
+  {/each}
 </ul>

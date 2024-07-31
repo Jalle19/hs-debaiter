@@ -1,0 +1,25 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 0;
+    padding-bottom: 0.2em;
+    /*display: inline-block;*/
+    /*border-bottom: 2px solid var(--highlight-color);*/
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  clear: both;
+}
+
+.pure-g > div {
+    box-sizing: border-box;
+}
+
+.l-box {
+    padding: 1em;
+}

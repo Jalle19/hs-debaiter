@@ -20,26 +20,35 @@
   };
 </script>
 
-<p>See beyond the veil and expose the true agenda &#128517;</p>
+<div class="pure-u-1-1 l-box">
+  <h1 style="margin-bottom: 0;">hs-debaiter</h1>
+  <p>See beyond the veil and expose the true agenda &#128517;</p>
+</div>
 
-Paste a link to an article:
-<form on:submit|preventDefault={debaitButtonClicked}>
-  <input type="text" bind:value={inputArticleUrl} />
-  <button>Debait</button>
-</form>
+<div class="pure-u-1-1 l-box">
+  Paste a link to an article:
+  <form on:submit|preventDefault={debaitButtonClicked}>
+    <input type="text" bind:value={inputArticleUrl} />
+    <button>Debait</button>
+  </form>
+</div>
 
-<h2>Latest articles</h2>
+<div class="pure-u-1-1 l-box">
+  <h2>Latest articles</h2>
 
-<ul>
-  {#each data.articles as article}
-    <li>[{article.num_titles}] <a href="/article/{article.guid}">{article.title}</a></li>
-  {/each}
-</ul>
+  <ul>
+    {#each data.articles as article}
+      <li>[{article.num_titles}] <a href="/article/{article.guid}">{article.title}</a></li>
+    {/each}
+  </ul>
+</div>
 
-<h2>Frequently changed articles</h2>
+<div class="pure-u-1-1 l-box">
+  <h2>Frequently changed articles</h2>
 
-<ul>
-  {#each data.frequentlyChangedArticles as article}
-    <li>[{article.num_titles}] <a href="/article/{article.guid}">{article.title}</a></li>
-  {/each}
-</ul>
+  <ul>
+    {#each data.frequentlyChangedArticles as article}
+      <li>[{article.num_titles}] <a href="/article/{article.guid}">{article.title}</a></li>
+    {/each}
+  </ul>
+</div>

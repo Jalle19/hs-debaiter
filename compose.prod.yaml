@@ -1,0 +1,14 @@
+services:
+  app:
+    ports:
+      - '18080:80'
+      - '12466:2466'
+    restart: unless-stopped
+
+  database:
+    restart: unless-stopped
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+volumes:
+  - mariadb_data

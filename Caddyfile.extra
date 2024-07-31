@@ -1,0 +1,5 @@
+
+:2466 {
+    root * webui/build/
+    file_server
+}

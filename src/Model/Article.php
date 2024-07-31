@@ -38,7 +38,10 @@ class Article
         $article->url = $row['url'];
         $article->imageUrl = $row['image_url'];
         $article->createdAt = new \DateTimeImmutable($row['created_at']);
-        $article->updatedAt = new \DateTimeImmutable($row['updated_at']);
+
+        if ($row['updated_at']) {
+            $article->updatedAt = new \DateTimeImmutable($row['updated_at']);
+        }
 
         if (isset($row['num_titles'])) {
             $article->numTitles = $row['num_titles'];

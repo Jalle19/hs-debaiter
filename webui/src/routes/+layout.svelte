@@ -1,6 +1,7 @@
 <script>
   import 'purecss/build/pure.css';
   import './styles.css';
+  import Navigation from './Navigation.svelte';
 </script>
 
 <svelte:head>
@@ -9,5 +10,9 @@
 </svelte:head>
 
 <div class="pure-g container">
+  <div class="pure-u-1-1 l-box">
+    <Navigation></Navigation>
+  </div>
+
   <slot />
 </div>

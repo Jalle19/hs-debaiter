@@ -3,9 +3,11 @@
 namespace Jalle19\HsDebaiter;
 
 use Jalle19\HsDebaiter\Http\ArticleController;
+use Jalle19\HsDebaiter\Http\CategoryController;
 use Jalle19\HsDebaiter\Http\ErrorHandler;
 use Jalle19\HsDebaiter\Http\Strategy;
 use Jalle19\HsDebaiter\Repository\ArticleRepository;
+use Jalle19\HsDebaiter\Repository\CategoryRepository;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\Serializer;
 use JMS\Serializer\SerializerBuilder;
@@ -40,7 +42,12 @@ class Application
         $container->add(ArticleController::class)
             ->addArgument(ArticleRepository::class)
             ->addArgument(Serializer::class);
+        $container->add(CategoryController::class)
+            ->addArgument(CategoryRepository::class)
+            ->addArgument(Serializer::class);
         $container->add(ArticleRepository::class)
+            ->addArgument(\PDO::class);
+        $container->add(CategoryRepository::class)
             ->addArgument(\PDO::class);
         $container->add(ErrorHandler::class)
             ->addArgument(Serializer::class);

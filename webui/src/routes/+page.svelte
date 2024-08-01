@@ -40,7 +40,7 @@
   <ul>
     {#each data.todaysChangedArticles as article}
       <li>
-        <ArticleSummary article={article}></ArticleSummary>
+        <ArticleSummary {article}></ArticleSummary>
       </li>
     {/each}
   </ul>
@@ -52,7 +52,7 @@
   <ul>
     {#each data.frequentlyChangedArticles as article}
       <li>
-        <ArticleSummary article={article}></ArticleSummary>
+        <ArticleSummary {article}></ArticleSummary>
       </li>
     {/each}
   </ul>

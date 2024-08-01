@@ -3,6 +3,7 @@
 use Dotenv\Dotenv;
 use Jalle19\HsDebaiter\Application;
 use Jalle19\HsDebaiter\Http\ArticleController;
+use Jalle19\HsDebaiter\Http\CategoryController;
 use Jalle19\HsDebaiter\Http\ErrorHandler;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use Nyholm\Psr7\Factory\Psr17Factory;
@@ -32,6 +33,7 @@ $router->map('GET', '/', function (ServerRequestInterface $request): ResponseInt
 $router->map('GET', '/articles/todays-changed', [ArticleController::class, 'getTodaysChangedArticles']);
 $router->map('GET', '/articles/frequently-changed', [ArticleController::class, 'getFrequentlyChangedArticles']);
 $router->map('GET', '/article/{guid}', [ArticleController::class, 'getArticle']);
+$router->map('GET', '/categories', [CategoryController::class, 'getCategories']);
 
 // Pass the request through the router and emit response
 $factory = new Psr17Factory();

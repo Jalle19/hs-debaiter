@@ -38,7 +38,8 @@ class ArticleRepository
         }
     }
 
-    public function getFrequentlyChangedArticles(int $limit): \Generator {
+    public function getFrequentlyChangedArticles(int $limit): \Generator
+    {
         $stmt = $this->pdo->prepare(
             'SELECT articles.*, COUNT(article_titles.id) AS num_titles
              FROM articles
@@ -48,6 +49,28 @@ class ArticleRepository
              ORDER BY COUNT(article_titles.id) DESC LIMIT :limit'
         );
 
+        $stmt->bindParam(':limit', $limit, \PDO::PARAM_INT);
+        $stmt->execute();
+
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            yield Article::fromDatabaseRow($row);
+        }
+    }
+
+    public function getCategoryArticles(string $category, int $limit): \Generator
+    {
+        $stmt = $this->pdo->prepare(
+            'SELECT articles.*, COUNT(article_titles.id) AS num_titles
+             FROM articles
+             LEFT OUTER JOIN article_titles ON (article_titles.article_id = articles.id)
+             WHERE articles.created_at > (NOW() - INTERVAL 7 DAY)
+             AND articles.category = :category
+             GROUP BY articles.id
+             ORDER BY id DESC
+             LIMIT :limit'
+        );
+
+        $stmt->bindParam(':category', $category);
         $stmt->bindParam(':limit', $limit, \PDO::PARAM_INT);
         $stmt->execute();
 

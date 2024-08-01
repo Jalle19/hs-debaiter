@@ -6,6 +6,7 @@ use Jalle19\HsDebaiter\Http\ArticleController;
 use Jalle19\HsDebaiter\Http\ErrorHandler;
 use Jalle19\HsDebaiter\Http\Strategy;
 use Jalle19\HsDebaiter\Repository\ArticleRepository;
+use JMS\Serializer\SerializationContext;
 use JMS\Serializer\Serializer;
 use JMS\Serializer\SerializerBuilder;
 use League\Container\Container;
@@ -21,20 +22,34 @@ class Application
     public function getContainer(): ContainerInterface
     {
         $container = new Container();
+
+        // Add shared instances
+        $container->addShared(\PDO::class, $this->getPdo());
+        $container->addShared(
+            Serializer::class,
+            SerializerBuilder::create()
+                ->setSerializationContextFactory(function () {
+                    // Include null properties
+                    return SerializationContext::create()
+                        ->setSerializeNull(true);
+                })
+                ->build()
+        );
+
+        // Wire everything
         $container->add(ArticleController::class)
             ->addArgument(ArticleRepository::class)
             ->addArgument(Serializer::class);
         $container->add(ArticleRepository::class)
             ->addArgument(\PDO::class);
-        $container->addShared(\PDO::class, $this->getPdo());
-        $container->addShared(Serializer::class, SerializerBuilder::create()->build());
         $container->add(ErrorHandler::class)
             ->addArgument(Serializer::class);
 
         return $container;
     }
 
-    public function getRouter(ContainerInterface $container): Router {
+    public function getRouter(ContainerInterface $container): Router
+    {
         $analyzerSettings = (new Settings())
             ->init('http', 'localhost', 8080)
             ->enableAllOriginsAllowed();

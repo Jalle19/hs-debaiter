@@ -3,7 +3,7 @@
 </script>
 
 <div class="pure-u-1-1 l-box">
-  <h1>Categories</h1>
+  <h2>Categories</h2>
 
   <ul>
     {#each data.categories as category}

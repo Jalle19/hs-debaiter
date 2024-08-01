@@ -24,19 +24,24 @@ class ErrorHandler implements MiddlewareInterface
         try {
             return $handler->handle($request);
         } catch (\Throwable $e) {
-            $response = (new Response())
-                ->withStatus($this->determineStatusCode($e))
-                ->withHeader('Content-Type', 'application/json');
-
-            $body = [
-                'code' => $response->getStatusCode(),
-                'message' => $e->getMessage(),
-            ];
-
-            $response->getBody()->write($this->serializer->serialize($body, 'json'));
-
-            return $response;
+            return $this->createErrorResponse($e);
         }
+    }
+
+    public function createErrorResponse(\Throwable $e): ResponseInterface
+    {
+        $response = (new Response())
+            ->withStatus($this->determineStatusCode($e))
+            ->withHeader('Content-Type', 'application/json');
+
+        $body = [
+            'code' => $response->getStatusCode(),
+            'message' => $e->getMessage(),
+        ];
+
+        $response->getBody()->write($this->serializer->serialize($body, 'json'));
+
+        return $response;
     }
 
     private function determineStatusCode(\Throwable $e): int

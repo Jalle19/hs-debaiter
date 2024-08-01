@@ -3,6 +3,7 @@
 use Dotenv\Dotenv;
 use Jalle19\HsDebaiter\Application;
 use Jalle19\HsDebaiter\Http\ArticleController;
+use Jalle19\HsDebaiter\Http\ErrorHandler;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7\Response;
@@ -36,6 +37,14 @@ $router->map('GET', '/article/{guid}', [ArticleController::class, 'getArticle'])
 $factory = new Psr17Factory();
 $creator = new ServerRequestCreator($factory, $factory, $factory, $factory);
 $request = $creator->fromGlobals();
-$response = $router->dispatch($request);
+
+try {
+    $response = $router->dispatch($request);
+} catch (\Throwable $e) {
+    /** @var ErrorHandler $errorHandler */
+    $errorHandler = $container->get(ErrorHandler::class);
+    $response = $errorHandler->createErrorResponse($e);
+}
+
 
 (new SapiEmitter())->emit($response);

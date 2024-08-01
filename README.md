@@ -36,3 +36,7 @@ docker build -t hs-debaiter .
 docker run -p 8080:80 -p 2466:2466 -v $PWD:/app -it --rm hs-debaiter
 docker run -v $PWD:/app -it --rm hs-debaiter php src/Console.php import-rss-feed
 ```
+
+## License
+
+GNU General Public License v2.0 or later

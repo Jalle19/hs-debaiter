@@ -24,7 +24,7 @@ class Article
         $article->title = $item['title'];
         $article->url = $item['link'];
 
-        if (isset($item['enclosure']['url'])) {
+        if (!empty($item['enclosure']['url'])) {
             $article->imageUrl = $item['enclosure']['url'];
         }
 

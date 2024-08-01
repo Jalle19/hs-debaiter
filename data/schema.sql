@@ -34,3 +34,5 @@ ALTER TABLE `articles`
 
 ALTER TABLE `articles`
     ADD INDEX `category` (`category`);
+
+UPDATE articles SET image_url = NULL WHERE image_url = ''

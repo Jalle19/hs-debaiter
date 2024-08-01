@@ -29,3 +29,8 @@ ENGINE=InnoDB
 AUTO_INCREMENT=197
 ;
 
+ALTER TABLE `articles`
+    ADD COLUMN `category` VARCHAR(255) NULL DEFAULT NULL AFTER `guid`;
+
+ALTER TABLE `articles`
+    ADD INDEX `category` (`category`);

@@ -7,6 +7,7 @@ class Article
 
     private ?string $id = null;
     private string $guid;
+    private ?string $category;
     private string $title;
     private string $url;
     private ?string $imageUrl = null;
@@ -19,6 +20,7 @@ class Article
     {
         $article = new Article();
         $article->guid = $item['id'];
+        $article->category = $item['category'];
         $article->title = $item['title'];
         $article->url = $item['link'];
 
@@ -34,6 +36,7 @@ class Article
         $article = new Article();
         $article->id = $row['id'];
         $article->guid = $row['guid'];
+        $article->category = $row['category'];
         $article->title = $row['title'];
         $article->url = $row['url'];
         $article->imageUrl = $row['image_url'];
@@ -63,6 +66,11 @@ class Article
     public function getGuid(): string
     {
         return $this->guid;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
     }
 
     public function getTitle(): string

@@ -82,12 +82,13 @@ class ArticleRepository
     public function storeArticle(Article $article): void
     {
         $stmt = $this->pdo->prepare(
-            'INSERT INTO articles (guid, title, url, image_url) 
-             VALUES (:guid, :title, :url, :imageUrl)'
+            'INSERT INTO articles (guid, category, title, url, image_url) 
+             VALUES (:guid, :category, :title, :url, :imageUrl)'
         );
 
         $stmt->execute([
             ':guid' => $article->getGuid(),
+            ':category' => $article->getCategory(),
             ':title' => $article->getTitle(),
             ':url' => $article->getUrl(),
             ':imageUrl' => $article->getImageUrl(),

@@ -3,17 +3,7 @@
 use Dotenv\Dotenv;
 use Jalle19\HsDebaiter\Application;
 use Jalle19\HsDebaiter\Http\ArticleController;
-use Jalle19\HsDebaiter\Http\ErrorHandler;
-use Jalle19\HsDebaiter\Http\Strategy;
-use Jalle19\HsDebaiter\Repository\ArticleRepository;
-use JMS\Serializer\Serializer;
-use JMS\Serializer\SerializerBuilder;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
-use League\Container\Container;
-use League\Route\Router;
-use Middlewares\Cors;
-use Neomerx\Cors\Analyzer;
-use Neomerx\Cors\Strategies\Settings;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7\Response;
 use Nyholm\Psr7Server\ServerRequestCreator;

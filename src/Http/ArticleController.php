@@ -19,7 +19,7 @@ class ArticleController
      * @param ArticleRepository $articleRepository
      * @param Serializer $serializer
      */
-    public function __construct(ArticleRepository $articleRepository, \JMS\Serializer\Serializer $serializer)
+    public function __construct(ArticleRepository $articleRepository, Serializer $serializer)
     {
         $this->articleRepository = $articleRepository;
         $this->serializer = $serializer;

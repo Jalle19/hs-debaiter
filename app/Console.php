@@ -2,28 +2,30 @@
 
 use Dotenv\Dotenv;
 use Forensic\FeedParser\Parser;
+use Jalle19\HsDebaiter\Application;
 use Jalle19\HsDebaiter\Console\ImportRssFeedCommand;
 use Jalle19\HsDebaiter\Repository\ArticleRepository;
 use Monolog\Logger;
-use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Application as SymfonyConsoleApplication;
 
 require __DIR__ . '/../vendor/autoload.php';
 
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->safeLoad();
 
-$application = new Application();
+// Initiailize container
+$app = new Application();
+$container = $app->getContainer();
 
+// Create a console application
+$consoleApp = new SymfonyConsoleApplication();
+
+// Add command for importing the RSS feed
 $logger = new Logger('hs-debaiter');
 $logger->pushHandler(new Monolog\Handler\StreamHandler('php://stdout', Logger::INFO));
 $feedParser = new Parser();
-$pdo = new \PDO(
-    sprintf('mysql:host=%s;port=%d;dbname=%s', $_ENV['DB_HOST'], $_ENV['DB_PORT'], $_ENV['DB_NAME']),
-    $_ENV['DB_USER'],
-    $_ENV['DB_PASS'],
-);
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-$articleRepository = new ArticleRepository($pdo);
-$application->add(new ImportRssFeedCommand($logger, $feedParser, $articleRepository));
+$articleRepository = $container->get(ArticleRepository::class);
+$consoleApp->add(new ImportRssFeedCommand($logger, $feedParser, $articleRepository));
 
-$application->run();
+// Run it
+$consoleApp->run();

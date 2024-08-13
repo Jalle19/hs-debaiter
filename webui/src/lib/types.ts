@@ -3,3 +3,7 @@ export type Article = {
   title: string;
   num_titles: number;
 };
+
+export type Category = {
+  name: string;
+};

@@ -6,5 +6,7 @@ export const load: PageLoad = async ({ fetch }) => {
   const response = await fetch(`${PUBLIC_API_BASE_URL}/categories`);
   const categories = (await response.json()) as Category[];
 
-  return { categories };
+  const pageTitle = 'Categories';
+
+  return { categories, pageTitle };
 };

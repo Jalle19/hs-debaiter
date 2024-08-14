@@ -4,16 +4,8 @@
   import 'purecss/build/pure.css';
   import './styles.css';
   import Navigation from './Navigation.svelte';
-
-  const getPageTitle = (pageTitle: string | undefined): string => {
-    const appName = 'hs-debaiter';
-
-    if (pageTitle) {
-      return `${pageTitle} | ${appName}`;
-    } else {
-      return appName;
-    }
-  };
+  import { getPageTitle, og } from '$lib/seo';
+  import MetaTags from '$lib/components/MetaTags.svelte';
 
   $: pageTitle = getPageTitle($page.data.pageTitle);
 </script>
@@ -21,6 +13,7 @@
 <svelte:head>
   <title>{pageTitle}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <MetaTags og={$og} />
 </svelte:head>
 
 <div class="pure-g container">

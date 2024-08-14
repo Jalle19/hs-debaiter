@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { DEFAULT_OG, getPageTitle, og } from '$lib/seo';
+
   export let data;
 
   const parseTitleCategory = (title: string): string => {
@@ -11,6 +13,13 @@
     const pos = title.indexOf(' | ');
 
     return title.substring(pos + 3, title.length);
+  };
+
+  $og = {
+    ...DEFAULT_OG,
+    title: getPageTitle(data.pageTitle),
+    image: data.article.image_url ?? DEFAULT_OG.image,
+    description: `The article title has been changed ${data.article.article_titles.length - 1} times`
   };
 </script>
 

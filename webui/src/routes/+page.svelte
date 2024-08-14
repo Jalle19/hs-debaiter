@@ -1,6 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import ArticleSummary from './ArticleSummary.svelte';
+  import { APP_NAME, DEFAULT_OG, og } from '$lib/seo';
 
   export let data;
 
@@ -20,11 +21,17 @@
       console.error(`Unable to parse URL:`, e);
     }
   };
+
+  const tagLine = 'See beyond the veil and expose the true agenda';
+  $og = {
+    ...DEFAULT_OG,
+    description: tagLine
+  };
 </script>
 
 <div class="pure-u-1-1 l-box">
-  <h1 style="margin-bottom: 0;">hs-debaiter</h1>
-  <p>See beyond the veil and expose the true agenda &#128517;</p>
+  <h1 style="margin-bottom: 0;">{APP_NAME}</h1>
+  <p>{tagLine} &#128517;</p>
 </div>
 
 <div class="pure-u-1-1 l-box">

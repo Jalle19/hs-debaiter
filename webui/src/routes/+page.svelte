@@ -17,6 +17,7 @@
       await goto(`/article/hs-${guid}`);
     } catch (e) {
       // Ignore unparsable input
+      console.error(`Unable to parse URL:`, e);
     }
   };
 </script>

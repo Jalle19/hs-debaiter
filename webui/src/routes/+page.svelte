@@ -1,7 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  import ArticleSummary from './ArticleSummary.svelte';
   import { APP_NAME, DEFAULT_OG, og } from '$lib/seo';
+  import ArticleSummary from '$lib/components/ArticleSummary.svelte';
 
   export let data;
 

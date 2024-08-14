@@ -3,9 +3,9 @@
 
   import 'purecss/build/pure.css';
   import './styles.css';
-  import Navigation from './Navigation.svelte';
   import { getPageTitle, og } from '$lib/seo';
   import MetaTags from '$lib/components/MetaTags.svelte';
+  import Navigation from '$lib/components/Navigation.svelte';
 
   $: pageTitle = getPageTitle($page.data.pageTitle);
 </script>

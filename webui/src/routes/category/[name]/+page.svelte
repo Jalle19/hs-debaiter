@@ -1,7 +1,7 @@
 <script>
-  import ArticleSummary from '../../ArticleSummary.svelte';
   import { page } from '$app/stores';
   import { DEFAULT_OG, getPageTitle, og } from '$lib/seo';
+  import ArticleSummary from '$lib/components/ArticleSummary.svelte';
 
   export let data;
 

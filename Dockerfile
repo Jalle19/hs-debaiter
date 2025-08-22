@@ -13,7 +13,7 @@ RUN npm run build
 #
 # Build the app server
 #
-FROM dunglas/frankenphp:1.2-php8.3-bookworm
+FROM dunglas/frankenphp:1.3-php8.4-bookworm
 
 RUN install-php-extensions \
     pdo_mysql \
@@ -25,7 +25,7 @@ ENV SERVER_NAME=:80
 COPY . /app
 
 # Install Composer and dependencies
-COPY --from=composer:2.7 /usr/bin/composer /usr/local/bin/composer
+COPY --from=composer:2.8 /usr/bin/composer /usr/local/bin/composer
 RUN composer install
 
 # Copy frontend to /webui

@@ -19,7 +19,7 @@
         "ext-pdo": "*",
         "forensic/feed-parser": "^1.2",
         "jms/serializer": "^3.30",
-        "laminas/laminas-httphandlerrunner": "^2.10",
+        "laminas/laminas-httphandlerrunner": "^2.12",
         "league/container": "^4.2",
         "league/route": "^5.1",
         "middlewares/cors": "^2.0",

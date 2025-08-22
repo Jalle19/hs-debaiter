@@ -1,5 +1,8 @@
 <?php
 
+// TODO: Remove once dependencies with deprecation errors are updated
+error_reporting(E_ALL ^ E_DEPRECATED);
+
 use Dotenv\Dotenv;
 use Forensic\FeedParser\Parser;
 use Jalle19\HsDebaiter\Application;

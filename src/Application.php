@@ -2,6 +2,7 @@
 
 namespace Jalle19\HsDebaiter;
 
+use Jalle19\HsDebaiter\HsApi\HsApiService;
 use Jalle19\HsDebaiter\Http\ArticleController;
 use Jalle19\HsDebaiter\Http\CategoryController;
 use Jalle19\HsDebaiter\Http\ErrorHandler;
@@ -17,6 +18,8 @@ use Middlewares\Cors;
 use Neomerx\Cors\Analyzer;
 use Neomerx\Cors\Strategies\Settings;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Client\ClientInterface;
+use Symfony\Component\HttpClient\Psr18Client;
 
 class Application
 {
@@ -37,6 +40,9 @@ class Application
                 })
                 ->build()
         );
+
+        // Add concrete implementations
+        $container->add(ClientInterface::class, new Psr18Client());
 
         // Wire everything
         $container->add(ArticleController::class)

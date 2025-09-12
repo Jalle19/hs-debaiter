@@ -52,6 +52,20 @@
       {/each}
     </ul>
   </div>
+
+  <div class="pure-u-1-1 l-box">
+    <h3>Title variations A/B tested</h3>
+    <p>
+      The front page has shown at least {data.article.num_test_titles} variations of this article's title
+    </p>
+    <ul>
+      {#each data.article.article_test_titles as testTitle}
+        <li>
+          <span class="title">{testTitle.title}</span>
+        </li>
+      {/each}
+    </ul>
+  </div>
 </div>
 
 <style>

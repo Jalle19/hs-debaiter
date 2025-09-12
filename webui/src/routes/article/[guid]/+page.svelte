@@ -3,6 +3,10 @@
 
   export let data;
 
+  const titleContainsCategory = (title: string): boolean => {
+    return title.indexOf(' | ') !== -1;
+  };
+
   const parseTitleCategory = (title: string): string => {
     const pos = title.indexOf(' | ');
 
@@ -46,7 +50,11 @@
     <ul>
       {#each data.article.article_titles as title}
         <li>
-          {parseTitleCategory(title.title)} | <span class="title">{parseTitle(title.title)}</span>
+          {#if titleContainsCategory(title.title)}
+            {parseTitleCategory(title.title)} | <span class="title">{parseTitle(title.title)}</span>
+          {:else}
+            <span class="title">{title.title}</span>
+          {/if}
           ({title.created_at})
         </li>
       {/each}

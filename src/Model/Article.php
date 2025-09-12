@@ -68,6 +68,11 @@ class Article
         return $this->guid;
     }
 
+    public function getNumericalGuid(): int
+    {
+        return substr($this->guid, 3);
+    }
+
     public function getCategory(): ?string
     {
         return $this->category;

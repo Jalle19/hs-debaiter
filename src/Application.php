@@ -57,6 +57,8 @@ class Application
             ->addArgument(\PDO::class);
         $container->add(ErrorHandler::class)
             ->addArgument(Serializer::class);
+        $container->add(HsApiService::class)
+            ->addArgument(ClientInterface::class);
 
         return $container;
     }

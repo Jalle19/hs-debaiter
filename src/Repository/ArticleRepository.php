@@ -19,6 +19,50 @@ class ArticleRepository
         $this->pdo = $pdo;
     }
 
+    public function getRecentlyAddedArticles(): \Generator
+    {
+        $stmt = $this->pdo->prepare(
+            'SELECT * FROM articles 
+             WHERE created_at >= DATE_SUB(NOW(), INTERVAL 3 HOUR)'
+        );
+
+        $stmt->execute();
+
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            yield Article::fromDatabaseRow($row);
+        }
+    }
+
+    public function hasHeadlineVariant(Article $article, int $variantId): bool
+    {
+        $stmt = $this->pdo->prepare(
+            'SELECT * FROM article_test_titles
+             WHERE article_id = :article AND variant_id = :variant
+             LIMIT 1'
+        );
+
+        $stmt->execute([
+            ':article' => $article->getId(),
+            ':variant' => $variantId,
+        ]);
+
+        return $stmt->rowCount() === 1;
+    }
+
+    public function storeHeadlineVariant(Article $article, int $variantId, string $title): void
+    {
+        $stmt = $this->pdo->prepare(
+            'INSERT INTO article_test_titles (article_id, variant_id, title) 
+             VALUES (:article, :variant, :title)'
+        );
+
+        $stmt->execute([
+            ':article' => $article->getId(),
+            ':variant' => $variantId,
+            ':title' => $title,
+        ]);
+    }
+
     public function getTodaysChangedArticles(): \Generator
     {
         $stmt = $this->pdo->prepare(

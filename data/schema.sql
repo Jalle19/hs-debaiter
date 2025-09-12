@@ -35,4 +35,19 @@ ALTER TABLE `articles`
 ALTER TABLE `articles`
     ADD INDEX `category` (`category`);
 
-UPDATE articles SET image_url = NULL WHERE image_url = ''
+UPDATE articles
+SET image_url = NULL
+WHERE image_url = '';
+
+CREATE TABLE `article_test_titles`
+(
+    `id`         INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `article_id` INT(10) UNSIGNED NOT NULL,
+    `variant_id` INT(10) UNSIGNED NOT NULL,
+    `title`      VARCHAR(255) NOT NULL,
+    PRIMARY KEY (`id`),
+    INDEX        `article_id_variant_id` (`article_id`, `variant_id`),
+    CONSTRAINT `article_test_titles_article_id_fk` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB
+AUTO_INCREMENT=4
+;

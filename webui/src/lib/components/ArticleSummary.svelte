@@ -4,4 +4,6 @@
   export let article: Article;
 </script>
 
-[{article.num_titles}] <a href="/article/{article.guid}">{article.title}</a> ({article.created_at})
+[{article.num_titles}/{article.num_test_titles}]
+<a href="/article/{article.guid}">{article.title}</a>
+({article.created_at})

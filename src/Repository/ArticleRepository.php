@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jalle19\HsDebaiter\Repository;
 
 use Jalle19\HsDebaiter\Model\Article;
+use Jalle19\HsDebaiter\Model\ArticleTestTitle;
 use Jalle19\HsDebaiter\Model\ArticleTitle;
 
 class ArticleRepository
@@ -19,15 +20,62 @@ class ArticleRepository
         $this->pdo = $pdo;
     }
 
+    public function getRecentlyAddedArticles(): \Generator
+    {
+        $stmt = $this->pdo->prepare(
+            'SELECT * FROM articles 
+             WHERE created_at >= DATE_SUB(NOW(), INTERVAL 3 HOUR)'
+        );
+
+        $stmt->execute();
+
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            yield Article::fromDatabaseRow($row);
+        }
+    }
+
+    public function hasHeadlineVariant(Article $article, int $variantId): bool
+    {
+        $stmt = $this->pdo->prepare(
+            'SELECT * FROM article_test_titles
+             WHERE article_id = :article AND variant_id = :variant
+             LIMIT 1'
+        );
+
+        $stmt->execute([
+            ':article' => $article->getId(),
+            ':variant' => $variantId,
+        ]);
+
+        return $stmt->rowCount() === 1;
+    }
+
+    public function storeHeadlineVariant(Article $article, int $variantId, string $title): void
+    {
+        $stmt = $this->pdo->prepare(
+            'INSERT INTO article_test_titles (article_id, variant_id, title) 
+             VALUES (:article, :variant, :title)'
+        );
+
+        $stmt->execute([
+            ':article' => $article->getId(),
+            ':variant' => $variantId,
+            ':title' => $title,
+        ]);
+    }
+
     public function getTodaysChangedArticles(): \Generator
     {
         $stmt = $this->pdo->prepare(
-            'SELECT articles.*, COUNT(article_titles.id) AS num_titles
+            'SELECT articles.*, 
+                COUNT(DISTINCT article_titles.id) AS num_titles,
+                COUNT(DISTINCT article_test_titles.id) AS num_test_titles
              FROM articles
              LEFT OUTER JOIN article_titles ON (article_titles.article_id = articles.id)
+             LEFT OUTER JOIN article_test_titles ON (article_test_titles.article_id = articles.id)
              WHERE articles.created_at > (NOW() - INTERVAL 1 DAY)
              GROUP BY articles.id
-             HAVING COUNT(article_titles.id) > 1
+             HAVING COUNT(DISTINCT article_titles.id) > 1 OR COUNT(DISTINCT article_test_titles.id) > 1
              ORDER BY id DESC'
         );
 
@@ -82,9 +130,12 @@ class ArticleRepository
     public function getArticle(string $guid): ?Article
     {
         $stmt = $this->pdo->prepare(
-            'SELECT articles.*, COUNT(article_titles.id) AS num_titles
+            'SELECT articles.*,
+                 COUNT(DISTINCT article_titles.id) AS num_titles,
+                 COUNT(DISTINCT article_test_titles.id) AS num_test_titles
              FROM articles
              LEFT OUTER JOIN article_titles ON (article_titles.article_id = articles.id)
+             LEFT OUTER JOIN article_test_titles ON (article_test_titles.article_id = articles.id)
              WHERE guid = :guid
              GROUP BY articles.id'
         );
@@ -159,6 +210,21 @@ class ArticleRepository
 
         while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             yield ArticleTitle::fromDatabaseRow($row);
+        }
+    }
+
+    public function getArticleTestTitles(int $id): \Generator
+    {
+        $stmt = $this->pdo->prepare(
+            'SELECT * FROM article_test_titles 
+             WHERE article_id = :article_id
+             ORDER BY id DESC'
+        );
+
+        $stmt->execute([':article_id' => $id]);
+
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            yield ArticleTestTitle::fromDatabaseRow($row);
         }
     }
 }

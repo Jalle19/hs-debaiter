@@ -3,6 +3,10 @@
 
   export let data;
 
+  const titleContainsCategory = (title: string): boolean => {
+    return title.indexOf(' | ') !== -1;
+  };
+
   const parseTitleCategory = (title: string): string => {
     const pos = title.indexOf(' | ');
 
@@ -46,8 +50,26 @@
     <ul>
       {#each data.article.article_titles as title}
         <li>
-          {parseTitleCategory(title.title)} | <span class="title">{parseTitle(title.title)}</span>
+          {#if titleContainsCategory(title.title)}
+            {parseTitleCategory(title.title)} | <span class="title">{parseTitle(title.title)}</span>
+          {:else}
+            <span class="title">{title.title}</span>
+          {/if}
           ({title.created_at})
+        </li>
+      {/each}
+    </ul>
+  </div>
+
+  <div class="pure-u-1-1 l-box">
+    <h3>Title variations A/B tested</h3>
+    <p>
+      The front page has shown at least {data.article.num_test_titles} variations of this article's title
+    </p>
+    <ul>
+      {#each data.article.article_test_titles as testTitle}
+        <li>
+          <span class="title">{testTitle.title}</span>
         </li>
       {/each}
     </ul>

@@ -76,6 +76,9 @@ class ArticleController
         $articleTitles = $this->articleRepository->getArticleTitles($article->getId());
         $article->setArticleTitles(iterator_to_array($articleTitles));
 
+        $articleTestTitles = $this->articleRepository->getArticleTestTitles($article->getId());
+        $article->setArticleTestTitles(iterator_to_array($articleTestTitles));
+
         $response = (new Response())
             ->withHeader('Content-Type', 'application/json');
 

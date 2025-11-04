@@ -5,12 +5,16 @@ namespace Jalle19\HsDebaiter\Console;
 use Forensic\FeedParser\Exceptions\InvalidURLException;
 use Forensic\FeedParser\Exceptions\ResourceNotFoundException;
 use Forensic\FeedParser\Parser;
+use Jalle19\HsDebaiter\HsApi\HsApiService;
 use Jalle19\HsDebaiter\Model\Article;
 use Jalle19\HsDebaiter\Repository\ArticleRepository;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+
+use function Jalle19\HsDebaiter\HsApi\isLiveArticle;
 
 class ImportRssFeedCommand extends Command
 {
@@ -21,22 +25,26 @@ class ImportRssFeedCommand extends Command
     private LoggerInterface $logger;
     private Parser $feedParser;
     private ArticleRepository $articleRepository;
+    private HsApiService $hsApiService;
 
     public function __construct(
         LoggerInterface $logger,
         Parser $feedParser,
+        HsApiService $hsApiService,
         ArticleRepository $articleRepository
     ) {
         parent::__construct();
 
         $this->logger = $logger;
         $this->feedParser = $feedParser;
+        $this->hsApiService = $hsApiService;
         $this->articleRepository = $articleRepository;
     }
 
     /**
      * @throws ResourceNotFoundException
      * @throws InvalidURLException
+     * @throws ClientExceptionInterface
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -49,6 +57,14 @@ class ImportRssFeedCommand extends Command
 
         foreach ($feed['items'] as $item) {
             $article = Article::fromFeedItem($item);
+
+            // Ignore live articles, their headlines can naturally change without it being bait
+            $laneItems = $this->hsApiService->getLaneItems($article);
+            if (isLiveArticle($laneItems)) {
+                $this->logger->info('Article is live, ignoring', ['article' => $article->getGuid()]);
+                continue;
+            }
+
             $existingArticle = $this->articleRepository->getArticle($article->getGuid());
 
             if (!$existingArticle) {

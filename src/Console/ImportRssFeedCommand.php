@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ImportRssFeedCommand extends Command
 {
-    private const HS_UUSIMMAT_FEED_URL = 'https://www.hs.fi/rss/tuoreimmat.xml';
+    private const string HS_UUSIMMAT_FEED_URL = 'https://www.hs.fi/rss/tuoreimmat.xml';
 
     protected static $defaultName = 'import-rss-feed';
 

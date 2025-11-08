@@ -89,9 +89,12 @@ class ArticleRepository
     public function getFrequentlyChangedArticles(int $limit): \Generator
     {
         $stmt = $this->pdo->prepare(
-            'SELECT articles.*, COUNT(article_titles.id) AS num_titles
+            'SELECT articles.*, 
+                COUNT(DISTINCT article_titles.id) AS num_titles,
+                COUNT(DISTINCT article_test_titles.id) AS num_test_titles
              FROM articles
              LEFT OUTER JOIN article_titles ON (article_titles.article_id = articles.id)
+             LEFT OUTER JOIN article_test_titles ON (article_test_titles.article_id = articles.id)
              WHERE articles.created_at > (NOW() - INTERVAL 7 DAY)
              GROUP BY articles.id
              ORDER BY COUNT(article_titles.id) DESC LIMIT :limit'

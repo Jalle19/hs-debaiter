@@ -10,6 +10,8 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+use function Jalle19\HsDebaiter\HsApi\isLiveArticle;
+
 class UpdateHeadlineTestTitlesCommand extends Command
 {
     protected static $defaultName = 'update-headline-test-titles';
@@ -46,6 +48,12 @@ class UpdateHeadlineTestTitlesCommand extends Command
         foreach ($articles as $article) {
             $this->logger->info('Processing article', ['article' => $article->getGuid()]);
             $items = $this->hsApiService->getLaneItems($article);
+
+            // Ignore live articles, their headlines can naturally change without it being bait
+            if (isLiveArticle($items)) {
+                $this->logger->info('Article is live, ignoring', ['article' => $article->getGuid()]);
+                continue;
+            }
 
             // Not all articles have bait tests
             if (!isset($items['headlineTestTitle']) || !isset($items['headlineVariantID'])) {

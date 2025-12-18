@@ -7,6 +7,11 @@ use Nyholm\Psr7\Request;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 
+function isLiveArticle(array $item): bool
+{
+    return isset($item['liveArticle']) && $item['liveArticle']['isLive'] === true;
+}
+
 class HsApiService
 {
     private const string API_BASE_URL = 'https://www.hs.fi/api';

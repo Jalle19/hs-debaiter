@@ -35,7 +35,7 @@ $httpClient = $container->get(ClientInterface::class);
 $hsApiService = $container->get(HsApiService::class);
 
 // Register commands
-$consoleApp->add(new ImportRssFeedCommand($logger, $feedParser, $articleRepository));
+$consoleApp->add(new ImportRssFeedCommand($logger, $feedParser, $hsApiService, $articleRepository));
 $consoleApp->add(new UpdateHeadlineTestTitlesCommand($logger, $hsApiService, $articleRepository));
 
 // Run it

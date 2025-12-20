@@ -1,11 +1,11 @@
-LABEL org.opencontainers.image.source="https://github.com/Jalle19/hs-debaiter"
-LABEL org.opencontainers.image.licenses="GPL-2.0-only"
-LABEL org.opencontainers.image.authors="Sam Stenvall <neggelandia@gmail.com>"
-
 #
 # Build the frontend
 #
 FROM node:22 AS frontend
+
+LABEL org.opencontainers.image.source="https://github.com/Jalle19/hs-debaiter"
+LABEL org.opencontainers.image.licenses="GPL-2.0-only"
+LABEL org.opencontainers.image.authors="Sam Stenvall <neggelandia@gmail.com>"
 
 WORKDIR /app
 COPY webui /app
@@ -18,6 +18,10 @@ RUN npm run build
 # Build the app server
 #
 FROM dunglas/frankenphp:1.3-php8.4-bookworm
+
+LABEL org.opencontainers.image.source="https://github.com/Jalle19/hs-debaiter"
+LABEL org.opencontainers.image.licenses="GPL-2.0-only"
+LABEL org.opencontainers.image.authors="Sam Stenvall <neggelandia@gmail.com>"
 
 RUN install-php-extensions \
     pdo_mysql \

@@ -1,46 +1,51 @@
-name: Publish Docker image
+name: Publish Docker images
 
 on:
   push:
     branches:
       - master
-  workflow_dispatch:
+    tags:
+      - '*'
+  pull_request:
+    branches:
+      - master
 
 jobs:
-  publish-docker-frontend:
-    name: Build and publish frontend Docker image
+  build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image:
+          - name: ghcr.io/jalle19/hs-debaiter-frontend
+            dockerfile: docker/frontend.Dockerfile
+          - name: ghcr.io/jalle19/hs-debaiter-app
+            dockerfile: docker/app.Dockerfile
+    permissions:
+      contents: read
+      packages: write
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v5
 
-      - name: Build the image
-        run: docker build --target frontend -t ghcr.io/jalle19/hs-debaiter-frontend:latest .
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ matrix.image.name }}
 
-      - name: Login to GitHub Container Registry
+      - name: Login to registry
+        if: github.event_name != 'pull_request'
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Publish the image
-        run: docker push ghcr.io/jalle19/hs-debaiter-frontend:latest
-
-  publish-docker-app:
-    name: Build and publish app Docker image
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Build the image
-        run: docker build --target app -t ghcr.io/jalle19/hs-debaiter-app:latest .
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+      - name: Build and push
+        uses: docker/build-push-action@v6
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish the image
-        run: docker push ghcr.io/jalle19/hs-debaiter-app:latest
+          context: .
+          file: ${{ matrix.image.dockerfile }}
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

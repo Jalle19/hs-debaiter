@@ -16,3 +16,5 @@ COPY .. /app
 # Install Composer and dependencies
 COPY --from=composer:2.8 /usr/bin/composer /usr/local/bin/composer
 RUN composer install
+
+EXPOSE 80

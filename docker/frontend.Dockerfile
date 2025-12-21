@@ -12,3 +12,5 @@ RUN npm install
 RUN npm run build
 
 ENTRYPOINT ["node", "/app/build/index.js"]
+
+EXPOSE 3000

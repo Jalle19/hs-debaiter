@@ -7,14 +7,14 @@ on:
   workflow_dispatch:
 
 jobs:
-  publish-docker:
-    name: Build Docker image
+  publish-docker-frontend:
+    name: Build and publish frontend Docker image
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
       - name: Build the image
-        run: docker build -t ghcr.io/jalle19/hs-debaiter:latest .
+        run: docker build --target frontend -t ghcr.io/jalle19/hs-debaiter-frontend:latest .
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
@@ -24,4 +24,23 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish the image
-        run: docker push ghcr.io/jalle19/hs-debaiter:latest
+        run: docker push ghcr.io/jalle19/hs-debaiter-frontend:latest
+
+  publish-docker-app:
+    name: Build and publish app Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build the image
+        run: docker build --target app -t ghcr.io/jalle19/hs-debaiter-app:latest .
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish the image
+        run: docker push ghcr.io/jalle19/hs-debaiter-app:latest

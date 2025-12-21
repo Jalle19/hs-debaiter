@@ -1,3 +1,5 @@
+[![Latest tag](https://ghcr-badge.egpl.dev/jalle19/hs-debaiter-app/latest_tag?color=%2344cc11&ignore=latest&label=version&trim=)](https://github.com/Jalle19/hs-debaiter/pkgs/container/hs-debaiter-app)
+
 # hs-debaiter
 
 A service that keeps track of hs.fi articles and their titles, allowing people to see any previous titles an article 

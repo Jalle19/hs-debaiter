@@ -27,17 +27,7 @@ Unlike in development, a `frontend` container is started that runs the frontend.
 To deploy the thing after pulling in the latest changes, run:
 
 ```bash
-docker compose down && docker compose build app && docker compose up -d
-```
-
-## Running without Docker Compose
-
-Something like this, you'll figure it out:
-
-```bash
-docker build -t hs-debaiter .
-docker run -p 8080:80 -p 2466:2466 -v $PWD:/app -it --rm hs-debaiter
-docker run -v $PWD:/app -it --rm hs-debaiter php src/Console.php import-rss-feed
+docker compose down && docker compose build && docker compose up -d
 ```
 
 ## License

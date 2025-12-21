@@ -22,6 +22,8 @@ docker compose up
 
 Same as development, but copy `compose.prod.yaml` instead and modify it.
 
+Unlike in development, a `frontend` container is started that runs the frontend.
+
 To deploy the thing after pulling in the latest changes, run:
 
 ```bash

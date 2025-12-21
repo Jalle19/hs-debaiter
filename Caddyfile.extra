@@ -1,6 +1,0 @@
-
-:2466 {
-    root * /webui/
-    try_files {path} /index.html
-    file_server
-}

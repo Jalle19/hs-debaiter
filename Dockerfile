@@ -14,10 +14,12 @@ RUN npm install
 
 RUN npm run build
 
+ENTRYPOINT ["node", "/app/build/index.js"]
+
 #
 # Build the app server
 #
-FROM dunglas/frankenphp:1.3-php8.4-bookworm
+FROM dunglas/frankenphp:1.3-php8.4-bookworm AS app
 
 LABEL org.opencontainers.image.source="https://github.com/Jalle19/hs-debaiter"
 LABEL org.opencontainers.image.licenses="GPL-2.0-only"
@@ -35,9 +37,3 @@ COPY . /app
 # Install Composer and dependencies
 COPY --from=composer:2.8 /usr/bin/composer /usr/local/bin/composer
 RUN composer install
-
-# Copy frontend to /webui
-COPY --from=frontend /app/build /webui
-
-# Add our extra Caddy definitions to the end
-RUN cat Caddyfile.extra >> /etc/caddy/Caddyfile

@@ -2,7 +2,9 @@ name: hs-debaiter
 
 services:
   app:
-    build: .
+    build:
+      context: .
+      target: app
     depends_on:
       - database
     environment:
@@ -11,7 +13,6 @@ services:
       DB_NAME: hs_debaiter
       DB_USER: root
       DB_PASS: root
-
 
   database:
     image: mariadb:11.4.2

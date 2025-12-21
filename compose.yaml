@@ -4,7 +4,7 @@ services:
   app:
     build:
       context: .
-      target: app
+      dockerfile: docker/app.Dockerfile
     depends_on:
       - database
     environment:

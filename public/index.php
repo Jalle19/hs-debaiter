@@ -3,7 +3,6 @@
 // TODO: Remove once dependencies with deprecation errors are updated
 error_reporting(E_ALL ^ E_DEPRECATED);
 
-use Dotenv\Dotenv;
 use Jalle19\HsDebaiter\Application;
 use Jalle19\HsDebaiter\Http\ArticleController;
 use Jalle19\HsDebaiter\Http\CategoryController;
@@ -16,9 +15,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 require_once(__DIR__ . '/../vendor/autoload.php');
-
-$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
-$dotenv->safeLoad();
 
 // Initialize the container and router
 $app = new Application();

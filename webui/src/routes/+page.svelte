@@ -6,6 +6,7 @@
   export let data;
 
   let inputArticleUrl: string;
+  let searchQuery: string | undefined = undefined;
 
   const debaitButtonClicked = async () => {
     // Parse the URL to get the GUID from it
@@ -22,6 +23,12 @@
     }
   };
 
+  const handleSearch = async () => {
+    if (searchQuery?.trim()) {
+      await goto(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
+
   const tagLine = 'See beyond the veil and expose the true agenda';
   $og = {
     ...DEFAULT_OG,
@@ -35,11 +42,31 @@
 </div>
 
 <div class="pure-u-1-1 l-box">
-  Paste a link to an article:
-  <form on:submit|preventDefault={debaitButtonClicked}>
-    <input type="text" bind:value={inputArticleUrl} />
-    <button>Debait</button>
-  </form>
+  <div class="pure-g">
+    <div class="pure-u-1 pure-u-sm-1-2">
+      <div class="paste-section">
+        Paste a link to an article:
+        <form on:submit|preventDefault={debaitButtonClicked}>
+          <input type="text" bind:value={inputArticleUrl} style="width: 100%; max-width: 300px;" />
+          <button>Debait</button>
+        </form>
+      </div>
+    </div>
+    <div class="pure-u-1 pure-u-sm-1-2">
+      <div class="search-section">
+        Search for articles by title (any variation):
+        <form on:submit|preventDefault={handleSearch}>
+          <input
+            type="text"
+            bind:value={searchQuery}
+            placeholder="Search for any title..."
+            style="width: 100%; max-width: 300px;"
+          />
+          <button>Search</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="pure-u-1-1 l-box">

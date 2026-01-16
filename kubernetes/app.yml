@@ -1,0 +1,59 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hs-debaiter-app
+spec:
+  selector:
+    matchLabels:
+      app: hs-debaiter-app
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: hs-debaiter-app
+    spec:
+      containers:
+      - name: hs-debaiter-app
+        image: ghcr.io/jalle19/hs-debaiter-app:0.1.0
+        ports:
+        - containerPort: 80
+        envFrom:
+        - configMapRef:
+            name: hs-debaiter-environment
+        env:
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: hs-debaiter-database-secret
+              key: DB_USER
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: hs-debaiter-database-secret
+              key: DB_PASS
+      - name: hs-debaiter-frontend
+        image: ghcr.io/jalle19/hs-debaiter-frontend:0.1.0
+        ports:
+        - containerPort: 3000
+        env:
+        - name: TZ
+          value: Europe/Helsinki
+        - name: PUBLIC_API_BASE_URL
+          value: https://api.example.com
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hs-debaiter-app
+spec:
+  selector:
+    app: hs-debaiter-app
+  type: LoadBalancer
+  ports:
+  - name: app
+    port: 80
+    protocol: TCP
+  - name: frontend
+    port: 3000
+    protocol: TCP

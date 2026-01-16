@@ -1,0 +1,52 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hs-debaiter-database
+spec:
+  selector:
+    app: hs-debaiter-database
+  type: LoadBalancer
+  ports:
+  - port: 3306
+    protocol: TCP
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: hs-debaiter-database
+spec:
+  selector:
+    matchLabels:
+      app: hs-debaiter-database
+  serviceName: hs-debaiter-database
+  template:
+    metadata:
+      labels:
+        app: hs-debaiter-database
+    spec:
+      containers:
+      - name: hs-debaiter-database
+        image: mariadb:11.4.2
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MARIADB_DATABASE
+          value: hs_debaiter
+        - name: MARIADB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: hs-debaiter-database-secret
+              key: DB_PASS
+        volumeMounts:
+        - name: hs-debaiter-database-data
+          mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+  - metadata:
+      name: hs-debaiter-database-data
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi

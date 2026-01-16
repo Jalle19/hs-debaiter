@@ -1,0 +1,67 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: hs-debaiter-cronjob-import-rss-feed
+spec:
+  schedule: "*/10 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: hs-debaiter-cronjob-import-rss-feed
+              image: ghcr.io/jalle19/hs-debaiter-app:0.1.0
+              envFrom:
+                - configMapRef:
+                    name: hs-debaiter-environment
+              env:
+                - name: DB_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: hs-debaiter-database-secret
+                      key: DB_USER
+                - name: DB_PASS
+                  valueFrom:
+                    secretKeyRef:
+                      name: hs-debaiter-database-secret
+                      key: DB_PASS
+              command:
+                - php
+                - src/Console.php
+                - import-rss-feed
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: hs-debaiter-cronjob-update-headline-test-titles
+spec:
+  schedule: "*/10 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: hs-debaiter-cronjob-update-headline-test-titles
+              image: ghcr.io/jalle19/hs-debaiter-app:0.1.0
+              envFrom:
+                - configMapRef:
+                    name: hs-debaiter-environment
+              env:
+                - name: DB_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: hs-debaiter-database-secret
+                      key: DB_USER
+                - name: DB_PASS
+                  valueFrom:
+                    secretKeyRef:
+                      name: hs-debaiter-database-secret
+                      key: DB_PASS
+              command:
+                - php
+                - src/Console.php
+                - update-headline-test-titles

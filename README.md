@@ -32,6 +32,10 @@ To deploy the thing after pulling in the latest changes, run:
 docker compose down && docker compose build && docker compose up -d
 ```
 
+### Running on Kubernetes
+
+If you use Kubernetes instead of Docker Compose, see the example manifests in [kubernetes/](./kubernetes).
+
 ## License
 
 GNU General Public License v2.0 or later

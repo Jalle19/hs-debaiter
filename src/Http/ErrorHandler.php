@@ -3,6 +3,7 @@
 namespace Jalle19\HsDebaiter\Http;
 
 use JMS\Serializer\Serializer;
+use League\Route\Http\Exception\BadRequestException;
 use League\Route\Http\Exception\NotFoundException;
 use Nyholm\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
@@ -47,6 +48,8 @@ class ErrorHandler implements MiddlewareInterface
     private function determineStatusCode(\Throwable $e): int
     {
         switch (get_class($e)) {
+            case BadRequestException::class:
+                return 400;
             case NotFoundException::class:
                 return 404;
             default:

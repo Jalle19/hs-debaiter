@@ -51,3 +51,10 @@ CREATE TABLE `article_test_titles`
 ) ENGINE=InnoDB
 AUTO_INCREMENT=4
 ;
+
+ALTER TABLE `article_titles`
+    ADD FULLTEXT INDEX `title` (`title`);
+ALTER TABLE `articles`
+    ADD FULLTEXT INDEX `title` (`title`);
+ALTER TABLE `article_test_titles`
+    ADD FULLTEXT INDEX `title` (`title`);

@@ -4,6 +4,7 @@ namespace Jalle19\HsDebaiter\Http;
 
 use Jalle19\HsDebaiter\Repository\ArticleRepository;
 use JMS\Serializer\Serializer;
+use League\Route\Http\Exception\BadRequestException;
 use League\Route\Http\Exception\NotFoundException;
 use Nyholm\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
@@ -83,6 +84,28 @@ class ArticleController
             ->withHeader('Content-Type', 'application/json');
 
         $response->getBody()->write($this->serializer->serialize($article, 'json'));
+
+        return $response;
+    }
+
+    /**
+     * @throws BadRequestException
+     */
+    public function searchArticles(ServerRequestInterface $request): ResponseInterface
+    {
+        $queryParams = $request->getQueryParams();
+        $query = $queryParams['q'] ?? null;
+
+        if ($query === null) {
+            throw new BadRequestException();
+        }
+
+        $articles = iterator_to_array($this->articleRepository->searchArticles($query));
+
+        $response = (new Response())
+            ->withHeader('Content-Type', 'application/json');
+
+        $response->getBody()->write($this->serializer->serialize($articles, 'json'));
 
         return $response;
     }

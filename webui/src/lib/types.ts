@@ -22,3 +22,5 @@ export type Article = {
 export type Category = {
   name: string;
 };
+
+export type SearchQuery = string | null;

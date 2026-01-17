@@ -1,4 +1,5 @@
 [![Latest tag](https://ghcr-badge.egpl.dev/jalle19/hs-debaiter-app/latest_tag?color=%2344cc11&ignore=latest&label=version&trim=)](https://github.com/Jalle19/hs-debaiter/pkgs/container/hs-debaiter-app)
+[![CI](https://github.com/Jalle19/hs-debaiter/actions/workflows/ci.yml/badge.svg)](https://github.com/Jalle19/hs-debaiter/actions/workflows/ci.yml)
 
 # hs-debaiter
 

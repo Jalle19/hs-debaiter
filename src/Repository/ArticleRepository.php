@@ -233,8 +233,8 @@ class ArticleRepository
 
     public function searchArticles(string $query): \Generator
     {
-        // Remove characters that can be interpreted by IN BOOLEAN MODE
-        $query = '*' . \preg_replace('/[+\-@><()~*"]+/', '', $query) . '*';
+        // Allow a subset of the modifiers available in IN BOOLEAN MODE
+        $query = \preg_replace('/[@><()~*]+/', '', $query);
 
         $stmt = $this->pdo->prepare(
             'SELECT DISTINCT articles.*, 

@@ -33,7 +33,7 @@
       will find articles about all the other Erikas
     </li>
   </ul>
-  <p>All the usual caveats about the computer not actually understand Finnish apply.</p>
+  <p>All the usual caveats about the computer not actually understanding Finnish apply.</p>
 </div>
 
 <div class="pure-u-1-1 l-box">

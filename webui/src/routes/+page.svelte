@@ -35,7 +35,7 @@
   <p>{tagLine} &#128517;</p>
 </div>
 
-<div class="pure-u-1-2 l-box">
+<div class="pure-u-1-2 l-box" style="min-width: 400px;">
   Paste a link to an article:
   <form on:submit|preventDefault={debaitButtonClicked}>
     <input type="text" bind:value={inputArticleUrl} />
@@ -43,7 +43,7 @@
   </form>
 </div>
 
-<div class="pure-u-1-2 l-box">
+<div class="pure-u-1-2 l-box" style="min-width: 400px;">
   <SearchForm searchQuery=""></SearchForm>
 </div>
 

@@ -6,5 +6,8 @@
     <li class="pure-menu-item">
       <a href="/categories" class="pure-menu-link">Categories</a>
     </li>
+    <li class="pure-menu-item">
+      <a href="/search" class="pure-menu-link">Search</a>
+    </li>
   </ul>
 </nav>

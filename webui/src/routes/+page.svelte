@@ -2,6 +2,7 @@
   import { goto } from '$app/navigation';
   import { APP_NAME, DEFAULT_OG, og } from '$lib/seo';
   import ArticleSummary from '$lib/components/ArticleSummary.svelte';
+  import SearchForm from '$lib/components/SearchForm.svelte';
 
   export let data;
 
@@ -34,12 +35,16 @@
   <p>{tagLine} &#128517;</p>
 </div>
 
-<div class="pure-u-1-1 l-box">
+<div class="pure-u-1-2 l-box">
   Paste a link to an article:
   <form on:submit|preventDefault={debaitButtonClicked}>
     <input type="text" bind:value={inputArticleUrl} />
     <button>Debait</button>
   </form>
+</div>
+
+<div class="pure-u-1-2 l-box">
+  <SearchForm searchQuery=""></SearchForm>
 </div>
 
 <div class="pure-u-1-1 l-box">

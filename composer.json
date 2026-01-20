@@ -15,17 +15,18 @@
         }
     ],
     "require": {
+        "php": ">=8.4",
         "ext-json": "*",
         "ext-pdo": "*",
         "forensic/feed-parser": "^1.2",
         "jms/serializer": "^3.30",
         "laminas/laminas-httphandlerrunner": "^2.12",
         "league/container": "^4.2",
-        "league/route": "^5.1",
-        "middlewares/cors": "^2.0",
+        "league/route": "^6.2",
         "monolog/monolog": "^2.9",
         "nyholm/psr7": "^1.8",
         "nyholm/psr7-server": "^1.1",
+        "phpnexus/cors-psr7": "^0.3.1",
         "psr/http-client": "^1.0",
         "symfony/console": "^5.4",
         "symfony/http-client": "^7.3"

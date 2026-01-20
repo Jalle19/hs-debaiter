@@ -33,7 +33,13 @@
       will find articles about all the other Erikas
     </li>
   </ul>
-  <p>All the usual caveats about the computer not actually understanding Finnish apply.</p>
+  <div>
+    All the usual caveats about the computer not actually understanding Finnish apply. You may need
+    to use asterisks to get the results you want, e.g. <pre>trauma</pre>
+    will not find "traumatisoida" but
+    <pre>trauma*</pre>
+     will.
+  </div>
 </div>
 
 <div class="pure-u-1-1 l-box">

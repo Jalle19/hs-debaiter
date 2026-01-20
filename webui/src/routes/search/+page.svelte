@@ -38,7 +38,7 @@
     to use asterisks to get the results you want, e.g. <pre>trauma</pre>
     will not find "traumatisoida" but
     <pre>trauma*</pre>
-     will.
+    will.
   </div>
 </div>
 

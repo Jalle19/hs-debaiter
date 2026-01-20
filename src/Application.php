@@ -14,9 +14,8 @@ use JMS\Serializer\Serializer;
 use JMS\Serializer\SerializerBuilder;
 use League\Container\Container;
 use League\Route\Router;
-use Middlewares\Cors;
-use Neomerx\Cors\Analyzer;
-use Neomerx\Cors\Strategies\Settings;
+use PhpNexus\Cors\CorsService;
+use PhpNexus\CorsPsr7\MiddlewarePsr15;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Client\ClientInterface;
 use Symfony\Component\HttpClient\Psr18Client;
@@ -65,11 +64,9 @@ class Application
 
     public function getRouter(ContainerInterface $container): Router
     {
-        $analyzerSettings = (new Settings())
-            ->init('http', 'localhost', 8080)
-            ->enableAllOriginsAllowed();
-        $analyzer = Analyzer::instance($analyzerSettings);
-        $corsMiddleware = new Cors($analyzer);
+        $corsMiddleware = new MiddlewarePsr15(new CorsService([
+            'allowOrigins' => ['*'],
+        ]));
 
         $strategy = new Strategy();
         $strategy->setContainer($container);

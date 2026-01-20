@@ -11,10 +11,7 @@
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-httphandlerrunner" />
       <path value="$PROJECT_DIR$/vendor/league/container" />
       <path value="$PROJECT_DIR$/vendor/league/route" />
-      <path value="$PROJECT_DIR$/vendor/middlewares/cors" />
-      <path value="$PROJECT_DIR$/vendor/middlewares/utils" />
       <path value="$PROJECT_DIR$/vendor/monolog/monolog" />
-      <path value="$PROJECT_DIR$/vendor/neomerx/cors-psr7" />
       <path value="$PROJECT_DIR$/vendor/nikic/fast-route" />
       <path value="$PROJECT_DIR$/vendor/nyholm/psr7" />
       <path value="$PROJECT_DIR$/vendor/nyholm/psr7-server" />
@@ -43,6 +40,8 @@
       <path value="$PROJECT_DIR$/vendor/graham-campbell/result-type" />
       <path value="$PROJECT_DIR$/vendor/phpoption/phpoption" />
       <path value="$PROJECT_DIR$/vendor/vlucas/phpdotenv" />
+      <path value="$PROJECT_DIR$/vendor/phpnexus/cors-psr7" />
+      <path value="$PROJECT_DIR$/vendor/phpnexus/cors" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.4">

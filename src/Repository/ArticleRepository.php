@@ -172,7 +172,9 @@ class ArticleRepository
         ]);
 
         $id = $this->pdo->lastInsertId();
-        $article->setId($id);
+        if ($id !== false) {
+            $article->setId((int)$id);
+        }
 
         $this->storeArticleTitleChange($article, $article->getTitle());
     }

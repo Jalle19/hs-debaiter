@@ -28,6 +28,7 @@ class HsApiService
 
     /**
      * @throws ClientExceptionInterface
+     * @throws HsApiException
      */
     public function getLaneItems(Article $article): array
     {
@@ -36,7 +37,12 @@ class HsApiService
         $response = $this->httpClient->sendRequest(new Request('GET', $url));
 
         if ($response->getStatusCode() !== 200) {
-            throw new \RuntimeException('Got bad response from HS API: ' . $response->getStatusCode());
+            // Distinguish between "article not found" and other errors
+            if ($response->getStatusCode() === 404) {
+                throw new ArticleNotFoundException();
+            } else {
+                throw new HsApiException('Got bad response from HS API: ' . $response->getStatusCode());
+            }
         }
 
         return \json_decode($response->getBody()->getContents(), true);

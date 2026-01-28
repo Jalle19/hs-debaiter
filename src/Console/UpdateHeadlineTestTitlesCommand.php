@@ -2,6 +2,8 @@
 
 namespace Jalle19\HsDebaiter\Console;
 
+use Jalle19\HsDebaiter\HsApi\ArticleNotFoundException;
+use Jalle19\HsDebaiter\HsApi\HsApiException;
 use Jalle19\HsDebaiter\HsApi\HsApiService;
 use Jalle19\HsDebaiter\Repository\ArticleRepository;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -38,7 +40,7 @@ class UpdateHeadlineTestTitlesCommand extends Command
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Throwable
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -47,7 +49,14 @@ class UpdateHeadlineTestTitlesCommand extends Command
 
         foreach ($articles as $article) {
             $this->logger->info('Processing article', ['article' => $article->getGuid()]);
-            $items = $this->hsApiService->getLaneItems($article);
+
+            // Handle cases where the article has been deleted since we first saw it
+            try {
+                $items = $this->hsApiService->getLaneItems($article);
+            } catch (ArticleNotFoundException) {
+                $this->logger->warning('Article no longer exists, ignoring', ['article' => $article->getGuid()]);
+                continue;
+            }
 
             // Ignore live articles, their headlines can naturally change without it being bait
             if (isLiveArticle($items)) {

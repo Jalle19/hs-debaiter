@@ -42,6 +42,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpnexus/cors" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpnexus/cors-psr7" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/laravel/serializable-closure" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpstan/phpstan" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

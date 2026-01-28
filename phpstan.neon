@@ -1,0 +1,5 @@
+parameters:
+    ignoreErrors:
+        -
+            identifier: property.onlyWritten
+            path: src/Model/*.php

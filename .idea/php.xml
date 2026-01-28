@@ -42,6 +42,7 @@
       <path value="$PROJECT_DIR$/vendor/phpnexus/cors-psr7" />
       <path value="$PROJECT_DIR$/vendor/phpnexus/cors" />
       <path value="$PROJECT_DIR$/vendor/laravel/serializable-closure" />
+      <path value="$PROJECT_DIR$/vendor/phpstan/phpstan" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.4">

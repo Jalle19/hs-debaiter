@@ -5,7 +5,7 @@ namespace Jalle19\HsDebaiter\Model;
 class Article
 {
 
-    private ?string $id = null;
+    private ?int $id = null;
     private string $guid;
     private ?string $category;
     private string $title;
@@ -36,7 +36,7 @@ class Article
     public static function fromDatabaseRow($row): Article
     {
         $article = new Article();
-        $article->id = $row['id'];
+        $article->id = (int)$row['id'];
         $article->guid = $row['guid'];
         $article->category = $row['category'];
         $article->title = $row['title'];
@@ -59,12 +59,12 @@ class Article
         return $article;
     }
 
-    public function getId(): ?string
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setId(?string $id): void
+    public function setId(?int $id): void
     {
         $this->id = $id;
     }
@@ -76,7 +76,7 @@ class Article
 
     public function getNumericalGuid(): int
     {
-        return substr($this->guid, 3);
+        return (int)substr($this->guid, 3);
     }
 
     public function getCategory(): ?string

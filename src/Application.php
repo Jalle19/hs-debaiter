@@ -20,6 +20,8 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Client\ClientInterface;
 use Symfony\Component\HttpClient\Psr18Client;
 
+const HTTP_USER_AGENT = 'hs-debaiter';
+
 class Application
 {
 
@@ -41,7 +43,11 @@ class Application
         );
 
         // Add concrete implementations
-        $container->add(ClientInterface::class, new Psr18Client());
+        $httpClient = new Psr18Client()->withOptions([
+            // Be nice and use a custom user agent string
+            'headers' => ['user-agent' => HTTP_USER_AGENT]
+        ]);
+        $container->add(ClientInterface::class, $httpClient);
 
         // Wire everything
         $container->add(ArticleController::class)

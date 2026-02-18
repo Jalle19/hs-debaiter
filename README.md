@@ -35,7 +35,7 @@ docker compose down && docker compose build && docker compose up -d
 
 ### Running on Kubernetes
 
-If you use Kubernetes instead of Docker Compose, see the example manifests in [kubernetes/](./kubernetes).
+If you use Kubernetes instead of Docker Compose you can use the provided [Helm](./helm) chart.
 
 ## License
 

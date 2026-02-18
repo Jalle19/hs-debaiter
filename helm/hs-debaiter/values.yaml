@@ -1,0 +1,5 @@
+# The Docker image version to deploy
+appVersion: "latest"
+
+# The API base URL the frontend should use
+publicApiBaseUrl: "https://api.hs-debaiter.example.com"

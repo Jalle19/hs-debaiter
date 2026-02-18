@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hs-debaiter-environment
+  labels:
+    {{- include "hs-debaiter.labels" . | nindent 4 }}
+data:
+  TZ: "Europe/Helsinki"
+  DB_HOST: "hs-debaiter-database"
+  DB_PORT: "3306"
+  DB_NAME: "hs_debaiter"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: hs-debaiter-database-secret
+  labels:
+    {{- include "hs-debaiter.labels" . | nindent 4 }}

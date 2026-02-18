@@ -1,3 +1,50 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hs-debaiter-app
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "hs-debaiter.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "hs-debaiter.selectorLabels" . | nindent 6 }}
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        {{- include "hs-debaiter.labels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: hs-debaiter-app
+          image: "ghcr.io/jalle19/hs-debaiter-app:{{ .Values.appVersion }}"
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: hs-debaiter-environment
+          env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: hs-debaiter-database-secret
+                  key: DB_USER
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: hs-debaiter-database-secret
+                  key: DB_PASS
+        - name: hs-debaiter-frontend
+          image: "ghcr.io/jalle19/hs-debaiter-frontend:{{ .Values.appVersion }}"
+          ports:
+            - containerPort: 3000
+          env:
+            - name: TZ
+              value: Europe/Helsinki
+            - name: PUBLIC_API_BASE_URL
+              value: "{{ .Values.publicApiBaseUrl }}"
+---
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -12,7 +59,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: hs-debaiter-cronjob-import-rss-feed
-              image: ghcr.io/jalle19/hs-debaiter-app:0.1.0
+              image: "ghcr.io/jalle19/hs-debaiter-app:{{ .Values.appVersion }}"
               envFrom:
                 - configMapRef:
                     name: hs-debaiter-environment
@@ -46,7 +93,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: hs-debaiter-cronjob-update-headline-test-titles
-              image: ghcr.io/jalle19/hs-debaiter-app:0.1.0
+              image: "ghcr.io/jalle19/hs-debaiter-app:{{ .Values.appVersion }}"
               envFrom:
                 - configMapRef:
                     name: hs-debaiter-environment
@@ -65,3 +112,19 @@ spec:
                 - php
                 - src/Console.php
                 - update-headline-test-titles
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hs-debaiter-app
+spec:
+  selector:
+    {{- include "hs-debaiter.selectorLabels" . | nindent 4 }}
+  type: LoadBalancer
+  ports:
+    - name: app
+      port: 80
+      protocol: TCP
+    - name: frontend
+      port: 3000
+      protocol: TCP

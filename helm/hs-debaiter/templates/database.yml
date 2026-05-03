@@ -45,7 +45,9 @@ spec:
     - metadata:
         name: hs-debaiter-database-data
       spec:
-        storageClassName: openebs-hostpath
+        {{ if .Values.storageClassName }}
+        storageClassName: {{ .Values.storageClassName }}
+        {{ end }}
         accessModes:
           - ReadWriteOnce
         resources:

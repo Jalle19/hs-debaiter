@@ -3,3 +3,6 @@ appVersion: "latest"
 
 # The API base URL the frontend should use
 publicApiBaseUrl: "https://api.hs-debaiter.example.com"
+
+# The name of the storage class to use for PVCs. Defaults to nothing meaning the class set as default will be used.
+#storageClassName:

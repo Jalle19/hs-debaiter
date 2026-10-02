@@ -1,6 +1,7 @@
 import type { PageLoad } from './$types';
 import { env } from '$env/dynamic/public';
 import type { SearchQuery } from '$lib/types';
+import { DEFAULT_OG } from '$lib/seo';
 
 export const load: PageLoad = async ({ fetch, url }) => {
   let searchResults = [];
@@ -21,5 +22,11 @@ export const load: PageLoad = async ({ fetch, url }) => {
     }
   }
 
-  return { searchQuery, searchResults };
+  const pageTitle = searchQuery !== null ? `Search results for "${searchQuery}"` : 'Search';
+  const og = {
+    ...DEFAULT_OG,
+    title: pageTitle
+  };
+
+  return { pageTitle, searchQuery, searchResults, og };
 };

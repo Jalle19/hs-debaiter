@@ -1,5 +1,3 @@
-import { writable } from 'svelte/store';
-
 export const APP_NAME = 'hs-debaiter';
 
 type OpenGraph = {
@@ -8,14 +6,11 @@ type OpenGraph = {
   description?: string;
 };
 
-export const DEFAULT_OG: OpenGraph = {
-  title: APP_NAME,
+export const DEFAULT_OG: Partial<OpenGraph> = {
   image: '/hs-debaiter_default.png'
 };
 
-export const og = writable(DEFAULT_OG);
-
-export const getPageTitle = (pageTitle?: string): string => {
+export const formatPageTitle = (pageTitle?: string): string => {
   if (pageTitle) {
     return `${pageTitle} | ${APP_NAME}`;
   } else {

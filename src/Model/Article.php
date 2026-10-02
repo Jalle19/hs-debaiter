@@ -2,6 +2,8 @@
 
 namespace Jalle19\HsDebaiter\Model;
 
+use function Jalle19\HsDebaiter\HsApi\isLiveArticle;
+
 class Article
 {
 
@@ -11,6 +13,7 @@ class Article
     private string $title;
     private string $url;
     private ?string $imageUrl = null;
+    private bool $live;
     private \DateTimeInterface $createdAt;
     private \DateTimeInterface $updatedAt;
     private int $numTitles = 0;
@@ -25,6 +28,7 @@ class Article
         $article->category = $item['category'];
         $article->title = $item['title'];
         $article->url = $item['link'];
+        $article->live = isLiveArticle($item);
 
         if (!empty($item['enclosure']['url'])) {
             $article->imageUrl = $item['enclosure']['url'];
@@ -42,6 +46,7 @@ class Article
         $article->title = $row['title'];
         $article->url = $row['url'];
         $article->imageUrl = $row['image_url'];
+        $article->live = $row['live'] === 1;
         $article->createdAt = new \DateTimeImmutable($row['created_at']);
 
         if ($row['updated_at']) {
@@ -97,6 +102,11 @@ class Article
     public function getImageUrl(): ?string
     {
         return $this->imageUrl;
+    }
+
+    public function isLive(): bool
+    {
+        return $this->live;
     }
 
     public function setArticleTitles(array $articleTitles): void

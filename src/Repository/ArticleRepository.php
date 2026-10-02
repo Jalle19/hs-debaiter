@@ -74,6 +74,7 @@ class ArticleRepository
              LEFT OUTER JOIN article_titles ON (article_titles.article_id = articles.id)
              LEFT OUTER JOIN article_test_titles ON (article_test_titles.article_id = articles.id)
              WHERE articles.created_at > (NOW() - INTERVAL 1 DAY)
+             AND articles.live = 0
              GROUP BY articles.id
              HAVING COUNT(DISTINCT article_titles.id) > 1 OR COUNT(DISTINCT article_test_titles.id) > 1
              ORDER BY id DESC'
@@ -96,6 +97,7 @@ class ArticleRepository
              LEFT OUTER JOIN article_titles ON (article_titles.article_id = articles.id)
              LEFT OUTER JOIN article_test_titles ON (article_test_titles.article_id = articles.id)
              WHERE articles.created_at > (NOW() - INTERVAL 7 DAY)
+             AND articles.live = 0
              GROUP BY articles.id
              ORDER BY COUNT(article_titles.id) DESC LIMIT :limit'
         );
@@ -159,8 +161,8 @@ class ArticleRepository
     public function storeArticle(Article $article): void
     {
         $stmt = $this->pdo->prepare(
-            'INSERT INTO articles (guid, category, title, url, image_url) 
-             VALUES (:guid, :category, :title, :url, :imageUrl)'
+            'INSERT INTO articles (guid, category, title, url, image_url, live) 
+             VALUES (:guid, :category, :title, :url, :imageUrl, :live)'
         );
 
         $stmt->execute([
@@ -169,6 +171,7 @@ class ArticleRepository
             ':title' => $article->getTitle(),
             ':url' => $article->getUrl(),
             ':imageUrl' => $article->getImageUrl(),
+            ':live' => $article->isLive() ? 1 : 0,
         ]);
 
         $id = $this->pdo->lastInsertId();

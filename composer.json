@@ -21,6 +21,7 @@
         "php": ">=8.4",
         "ext-json": "*",
         "ext-pdo": "*",
+        "byjg/migration": "^6.0",
         "forensic/feed-parser": "^1.2",
         "jms/serializer": "^3.30",
         "laminas/laminas-httphandlerrunner": "^2.12",

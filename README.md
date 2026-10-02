@@ -16,6 +16,8 @@ cp .env.example .env
 cp webui/.env.example webui/.env
 cp compose.dev.yaml compose.override.yaml
 docker compose run --rm app composer install
+docker compose run --rm app vendor/bin/migrate install
+docker compose run --rm app vendor/bin/migrate up
 docker compose run --rm app php src/Console.php import-rss-feed
 docker compose run --rm app php src/Console.php update-headline-test-titles
 docker compose up

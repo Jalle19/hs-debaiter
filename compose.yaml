@@ -13,6 +13,7 @@ services:
       DB_NAME: hs_debaiter
       DB_USER: root
       DB_PASS: root
+      MIGRATION_CONNECTION: mysql://root:root@database/hs_debaiter
 
   database:
     image: mariadb:11.4.2

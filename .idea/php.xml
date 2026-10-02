@@ -43,6 +43,14 @@
       <path value="$PROJECT_DIR$/vendor/phpnexus/cors" />
       <path value="$PROJECT_DIR$/vendor/laravel/serializable-closure" />
       <path value="$PROJECT_DIR$/vendor/phpstan/phpstan" />
+      <path value="$PROJECT_DIR$/vendor/symfony/yaml" />
+      <path value="$PROJECT_DIR$/vendor/byjg/uri" />
+      <path value="$PROJECT_DIR$/vendor/byjg/serializer" />
+      <path value="$PROJECT_DIR$/vendor/byjg/anydataset" />
+      <path value="$PROJECT_DIR$/vendor/byjg/anydataset-db" />
+      <path value="$PROJECT_DIR$/vendor/byjg/migration" />
+      <path value="$PROJECT_DIR$/vendor/byjg/xmlutil" />
+      <path value="$PROJECT_DIR$/vendor/psr/cache" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.4">

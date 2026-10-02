@@ -1,5 +1,6 @@
 import type { PageLoad } from './$types';
 import { env } from '$env/dynamic/public';
+import { DEFAULT_OG } from '$lib/seo';
 
 export const load: PageLoad = async ({ fetch }) => {
   // Fetch articles
@@ -10,5 +11,12 @@ export const load: PageLoad = async ({ fetch }) => {
   response = await fetch(`${env.PUBLIC_API_BASE_URL}/articles/frequently-changed`);
   const frequentlyChangedArticles = await response.json();
 
-  return { todaysChangedArticles, frequentlyChangedArticles };
+  const tagLine = 'See beyond the veil and expose the true agenda';
+
+  const og = {
+    ...DEFAULT_OG,
+    description: tagLine
+  };
+
+  return { todaysChangedArticles, frequentlyChangedArticles, tagLine, og };
 };

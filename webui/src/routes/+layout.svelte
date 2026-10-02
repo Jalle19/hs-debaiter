@@ -3,7 +3,7 @@
 
   import 'purecss/build/pure.css';
   import './styles.css';
-  import { getPageTitle, og } from '$lib/seo';
+  import { getPageTitle } from '$lib/seo';
   import MetaTags from '$lib/components/MetaTags.svelte';
   import Navigation from '$lib/components/Navigation.svelte';
 
@@ -13,7 +13,7 @@
 <svelte:head>
   <title>{pageTitle}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <MetaTags og={$og} />
+  <MetaTags og={$page.data.og} />
 </svelte:head>
 
 <div class="pure-g container">

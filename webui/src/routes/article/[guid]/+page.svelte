@@ -29,7 +29,7 @@
     <h2>{data.article.title}</h2>
 
     <p>
-      <a href={data.article.url} target="_blank">{data.article.url}</a>
+      <a href={data.article.url} target="_blank" rel="external">{data.article.url}</a>
     </p>
   </div>
 

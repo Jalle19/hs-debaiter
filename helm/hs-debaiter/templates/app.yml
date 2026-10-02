@@ -16,6 +16,25 @@ spec:
       labels:
         {{- include "hs-debaiter.labels" . | nindent 8 }}
     spec:
+      initContainers:
+        - name: migrations-install
+          image: "ghcr.io/jalle19/hs-debaiter-app:{{ .Values.appVersion }}"
+          command: [ "vendor/bin/migrate", "install" ]
+          env:
+            - name: MIGRATION_CONNECTION
+              valueFrom:
+                secretKeyRef:
+                  name: hs-debaiter-database-secret
+                  key: MIGRATION_CONNECTION
+        - name: migrations-up
+          image: "ghcr.io/jalle19/hs-debaiter-app:{{ .Values.appVersion }}"
+          command: [ "vendor/bin/migrate", "up" ]
+          env:
+            - name: MIGRATION_CONNECTION
+              valueFrom:
+                secretKeyRef:
+                  name: hs-debaiter-database-secret
+                  key: MIGRATION_CONNECTION
       containers:
         - name: hs-debaiter-app
           image: "ghcr.io/jalle19/hs-debaiter-app:{{ .Values.appVersion }}"

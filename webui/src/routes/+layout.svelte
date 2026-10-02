@@ -3,11 +3,11 @@
 
   import 'purecss/build/pure.css';
   import './styles.css';
-  import { getPageTitle } from '$lib/seo';
+  import { formatPageTitle } from '$lib/seo';
   import MetaTags from '$lib/components/MetaTags.svelte';
   import Navigation from '$lib/components/Navigation.svelte';
 
-  $: pageTitle = getPageTitle($page.data.pageTitle);
+  $: pageTitle = formatPageTitle($page.data.pageTitle);
 </script>
 
 <svelte:head>

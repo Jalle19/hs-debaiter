@@ -38,14 +38,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: php-actions/composer@v6
+      - uses: shivammathur/setup-php@v2
         with:
-          php_version: 8.4
+          php-version: 8.4
 
-      - uses: php-actions/phpstan@v3
-        with:
-          level: 5
-          path: src/
+      - name: Install dependencies
+        run:
+          composer install
+
+      - name: Run phpstan
+        run:
+          vendor/bin/phpstan
 
   tests:
     name: Run tests

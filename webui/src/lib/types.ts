@@ -9,6 +9,7 @@ type ArticleTestTitle = {
 
 export type Article = {
   guid: string;
+  category?: string;
   created_at: Date;
   title: string;
   num_titles: number;

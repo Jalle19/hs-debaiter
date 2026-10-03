@@ -9,7 +9,9 @@ use Psr\Http\Client\ClientInterface;
 
 function isLiveArticle(array $item): bool
 {
-    return isset($item['liveArticle']) && $item['liveArticle']['isLive'] === true;
+    // There's also an isLive boolean but that one changes to false when reporting ends, and we don't want to change
+    // the status to reflect that
+    return isset($item['liveArticle']);
 }
 
 class HsApiService

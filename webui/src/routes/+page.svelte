@@ -3,6 +3,7 @@
   import { APP_NAME } from '$lib/seo';
   import ArticleSummary from '$lib/components/ArticleSummary.svelte';
   import SearchForm from '$lib/components/SearchForm.svelte';
+  import ArticleFilterForm from '$lib/components/ArticleFilterForm.svelte';
 
   export let data;
 
@@ -54,7 +55,9 @@
 </div>
 
 <div class="pure-u-1-1 l-box">
-  <h2>Most updated articles (last 7 days)</h2>
+  <h2>Most updated articles</h2>
+
+  <ArticleFilterForm filter={data.articleFilter}></ArticleFilterForm>
 
   <ul>
     {#each data.frequentlyChangedArticles as article}

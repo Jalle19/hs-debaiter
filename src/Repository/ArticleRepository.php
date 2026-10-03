@@ -7,6 +7,7 @@ namespace Jalle19\HsDebaiter\Repository;
 use Jalle19\HsDebaiter\Model\Article;
 use Jalle19\HsDebaiter\Model\ArticleTestTitle;
 use Jalle19\HsDebaiter\Model\ArticleTitle;
+use Jalle19\HsDebaiter\Model\Timespan;
 
 class ArticleRepository
 {
@@ -87,7 +88,7 @@ class ArticleRepository
         }
     }
 
-    public function getFrequentlyChangedArticles(int $limit): \Generator
+    public function getFrequentlyChangedArticles(int $limit, Timespan $timespan, bool $excludeLive): \Generator
     {
         $stmt = $this->pdo->prepare(
             'SELECT articles.*, 
@@ -96,10 +97,9 @@ class ArticleRepository
              FROM articles
              LEFT OUTER JOIN article_titles ON (article_titles.article_id = articles.id)
              LEFT OUTER JOIN article_test_titles ON (article_test_titles.article_id = articles.id)
-             WHERE articles.created_at > (NOW() - INTERVAL 7 DAY)
-             AND articles.live = 0
+             ' . self::buildArticlesWhereClause($timespan, $excludeLive) . '
              GROUP BY articles.id
-             ORDER BY COUNT(article_titles.id) DESC LIMIT :limit'
+             ORDER BY COUNT(DISTINCT article_titles.id) DESC LIMIT :limit'
         );
 
         $stmt->bindParam(':limit', $limit, \PDO::PARAM_INT);
@@ -261,5 +261,26 @@ class ArticleRepository
         while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             yield Article::fromDatabaseRow($row);
         }
+    }
+
+    public static function buildArticlesWhereClause(Timespan $timespan, bool $excludeLive): string
+    {
+        $whereClauses = [];
+
+        if ($timespan !== Timespan::ALL_TIME) {
+            $whereClauses[] = 'articles.created_at > (NOW() - INTERVAL ' . $timespan->toDays() . ' DAY)';
+        }
+
+        if ($excludeLive) {
+            $whereClauses[] = 'articles.live = 0';
+        }
+
+        $whereClause = '';
+
+        if (\count($whereClauses) > 0) {
+            $whereClause = 'WHERE ' . \implode(' AND ', $whereClauses);
+        }
+
+        return $whereClause;
     }
 }

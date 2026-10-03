@@ -28,6 +28,13 @@
   <div class="pure-u-3-4 l-box">
     <h2>{data.article.title}</h2>
 
+    {#if data.article.category}
+      <p>
+        Filed under
+        <a href="/category/{encodeURIComponent(data.article.category)}">{data.article.category}</a>
+      </p>
+    {/if}
+
     <p>
       <a href={data.article.url} target="_blank" rel="external">{data.article.url}</a>
     </p>

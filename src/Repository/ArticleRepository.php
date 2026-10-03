@@ -99,7 +99,7 @@ class ArticleRepository
              WHERE articles.created_at > (NOW() - INTERVAL 7 DAY)
              AND articles.live = 0
              GROUP BY articles.id
-             ORDER BY COUNT(article_titles.id) DESC LIMIT :limit'
+             ORDER BY COUNT(DISTINCT article_titles.id) DESC LIMIT :limit'
         );
 
         $stmt->bindParam(':limit', $limit, \PDO::PARAM_INT);

@@ -2,6 +2,7 @@
 
 namespace Jalle19\HsDebaiter\Http;
 
+use Jalle19\HsDebaiter\Model\Timespan;
 use Jalle19\HsDebaiter\Repository\ArticleRepository;
 use JMS\Serializer\Serializer;
 use League\Route\Http\Exception\BadRequestException;
@@ -40,7 +41,11 @@ class ArticleController
 
     public function getFrequentlyChangedArticles(ServerRequestInterface $request): ResponseInterface
     {
-        $articles = $this->articleRepository->getFrequentlyChangedArticles(15);
+        $params = $request->getQueryParams();
+        $timespan = $params['timespan'] ? Timespan::from($params['timespan']) : Timespan::WEEK;
+        $excludeLive = $params['excludeLive'] === 'true';
+
+        $articles = $this->articleRepository->getFrequentlyChangedArticles(25, $timespan, $excludeLive);
 
         $response = (new Response())
             ->withHeader('Content-Type', 'application/json');

@@ -15,6 +15,7 @@ export type Article = {
   num_titles: number;
   image_url?: string;
   url: string;
+  live: boolean;
   article_titles: ArticleTitle[];
   num_test_titles: number;
   article_test_titles: ArticleTestTitle[];

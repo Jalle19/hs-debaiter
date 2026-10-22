@@ -1,4 +1,4 @@
-FROM dunglas/frankenphp:1.3-php8.4-bookworm
+FROM dunglas/frankenphp:1.13-php8.4-bookworm
 
 LABEL org.opencontainers.image.source="https://github.com/Jalle19/hs-debaiter"
 LABEL org.opencontainers.image.licenses="GPL-2.0-or-later"
@@ -9,6 +9,7 @@ RUN install-php-extensions \
     zip
 
 # Configure Caddy to use HTTP only
+ENV CADDY_GLOBAL_OPTIONS="auto_https off"
 ENV SERVER_NAME=:80
 
 COPY .. /app

@@ -41,6 +41,11 @@ spec:
           volumeMounts:
             - name: hs-debaiter-database-data
               mountPath: /var/lib/mysql
+          readinessProbe:
+            exec:
+              command: [ "healthcheck.sh", "--connect", "--innodb_initialized" ]
+            initialDelaySeconds: 5
+            periodSeconds: 5
   volumeClaimTemplates:
     - metadata:
         name: hs-debaiter-database-data
